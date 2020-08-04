@@ -59,29 +59,13 @@ namespace KOASampleCS
 			}
 		}
 
-		private bool askOpenMarket()
-		{
-			List<BuyStockData> buyStockDataList = CoreManager.Instance.requestManager.getBuyStockDataList();
-			if (buyStockDataList.Count == 0)
-				return false;
-
-			if (isOpenMarket)
-				return true;
-
-			OrderStock(buyStockDataList[0], KOABiddingType.BEFORE_MARKET_EXTRA_TIME_CLOSING_PRICE);
-			return false;
-		}
-
 		public bool OrderEveryStock()
 		{
-			if(askOpenMarket() == false)
-				return false;
-
 			List<BuyStockData> buyStockDataList = CoreManager.Instance.requestManager.getBuyStockDataList();
 			for (int i = 1; i < buyStockDataList.Count; i++)
 			{
 				OrderStock(buyStockDataList[i], KOABiddingType.BEFORE_MARKET_EXTRA_TIME_CLOSING_PRICE);
-				Thread.Sleep(100);
+				Thread.Sleep(250);
 			}
 
 			return true;
