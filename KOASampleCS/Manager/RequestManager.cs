@@ -98,6 +98,9 @@ namespace KOASampleCS
 				if(volume < requestConditionData.volume)
 					continue;
 
+                if (name.Contains("선물"))
+                    continue;
+
 				BuyStockData buyStockData = new BuyStockData();
 				buyStockData.code = code;
 				buyStockData.name = name;
