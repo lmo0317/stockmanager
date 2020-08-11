@@ -10,10 +10,10 @@ namespace KOASampleCS
 	{
 		public static int ORDER_TIME_HOUR = 8;
 		public static int ORDER_TIME_MINUTE = 29;
-		public static int ORDER_TIME_SECOND = 58;
+		public static int ORDER_TIME_SECOND = 30;
 		public static int ORDER_TOTAL_AMOUNT = 300000;
 		public static bool DEFAULT_ORDER_CHECK = true;
-		public static int DEFAULT_CHANGE_RATE = 7;
+		public static int DEFAULT_CHANGE_RATE = 4;
 		public static int DEFAULT_VOLUME = 1000;
 
 		public static bool isAutoStart = false;

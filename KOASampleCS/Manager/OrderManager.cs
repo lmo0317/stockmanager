@@ -15,12 +15,13 @@ namespace KOASampleCS
 		private System.Windows.Forms.Timer reserverOrderStockTimer;
 		private DateTime reserveTime;
 		private bool isOpenMarket = false;
+		private bool canBuyBeforeMarket = false;
 
 		public void OnReceiveMsg(AxKHOpenAPILib._DKHOpenAPIEvents_OnReceiveMsgEvent e)
 		{
 			if (e.sRQName == "주식주문")
-			{	
-				isOpenMarket = !e.sMsg.Contains("[505217]");
+			{
+				canBuyBeforeMarket = !e.sMsg.Contains("[505217]");
 			}
 		}
 
@@ -31,19 +32,6 @@ namespace KOASampleCS
 			reserverOrderStockTimer.Tick += new EventHandler(reserveOrderStockHandler);
 
 			reserveTime = new DateTime();
-		}
-
-		void reserveOrderStockHandler(object sender, EventArgs e)
-		{
-			TimeSpan spanTime = DateTime.Now.Subtract(reserveTime);
-			if(spanTime.TotalSeconds >= 0)
-			{
-				if (CoreManager.Instance.accountManager.credit == null)
-					return;
-
-				if(OrderEveryStock())
-					reserverOrderStockTimer.Stop();
-			}
 		}
 
 		public void reserveOrderStock(bool isStart, DateTime time)
@@ -59,16 +47,52 @@ namespace KOASampleCS
 			}
 		}
 
-		public bool OrderEveryStock()
+		void reserveOrderStockHandler(object sender, EventArgs e)
+		{
+			TimeSpan spanTime = DateTime.Now.Subtract(reserveTime);
+			if(spanTime.TotalSeconds >= 0)
+			{
+				if (CoreManager.Instance.accountManager.credit == null)
+					return;
+
+				//시간외 거래가 가능한지 확인한다.
+				if (canBuyBeforeMarket)
+				{
+					//시간외 거래가 가능하면 리스트(1~n)개의 종목을 구매한다.
+					OrderEveryStock();
+					reserverOrderStockTimer.Stop();
+				}
+				else
+				{
+					//시간외 거래가 가능하지 않다면 0번째 종목을 구매해봐서 거래가 가능한지 확인한다.
+					checkCanBuyBeforeMarket();
+					Thread.Sleep(500);
+				}
+			}
+		}
+
+		public void checkCanBuyBeforeMarket()
 		{
 			List<BuyStockData> buyStockDataList = CoreManager.Instance.requestManager.getBuyStockDataList();
+
+			if (buyStockDataList.Count == 0)
+				return;
+
+			OrderStock(buyStockDataList[0], KOABiddingType.BEFORE_MARKET_EXTRA_TIME_CLOSING_PRICE);
+		}
+
+		public void OrderEveryStock()
+		{
+			List<BuyStockData> buyStockDataList = CoreManager.Instance.requestManager.getBuyStockDataList();
+
+			if (buyStockDataList.Count == 0)
+				return;
+			
 			for (int i = 1; i < buyStockDataList.Count; i++)
 			{
 				OrderStock(buyStockDataList[i], KOABiddingType.BEFORE_MARKET_EXTRA_TIME_CLOSING_PRICE);
 				Thread.Sleep(250);
 			}
-
-			return true;
 		}
 
 		public void OrderStock(BuyStockData buyStockData, String orderType)
