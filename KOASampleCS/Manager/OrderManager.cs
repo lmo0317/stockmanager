@@ -21,7 +21,7 @@ namespace KOASampleCS
 		{
 			if (e.sRQName == "주식주문")
 			{
-				canBuyBeforeMarket = !e.sMsg.Contains("[505218]");
+				canBuyBeforeMarket = !e.sMsg.Contains("[505217]");
 			}
 		}
 
@@ -66,7 +66,7 @@ namespace KOASampleCS
 				{
 					//시간외 거래가 가능하지 않다면 0번째 종목을 구매해봐서 거래가 가능한지 확인한다.
 					checkCanBuyBeforeMarket();
-					Thread.Sleep(250);
+					Thread.Sleep(500);
 				}
 			}
 		}
