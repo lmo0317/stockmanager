@@ -14,21 +14,26 @@ namespace KOASampleCS
 	{
 		private System.Windows.Forms.Timer reserverOrderStockTimer;
 		private DateTime reserveTime;
-		private bool isOpenMarket = false;
+		private bool isCloseMarket = false;
 		private bool canBuyBeforeMarket = false;
 
 		public void OnReceiveMsg(AxKHOpenAPILib._DKHOpenAPIEvents_OnReceiveMsgEvent e)
 		{
-            //[505182] 장개시전입니다.
-            //[571566] 주문불가능한종목입니다.
-            //[107179] 장개시전 시간외 매수주문이 완료되었습니다.
+			//[505217] 장종료되었습니다.
+			//[505182] 장개시전입니다.
+			//[571566] 주문불가능한종목입니다.
+			//[107179] 장개시전 시간외 매수주문이 완료되었습니다.
 
 			if (e.sRQName == "주식주문")
 			{
-                if (canBuyBeforeMarket == false)
-                {
-                    canBuyBeforeMarket = e.sMsg.Contains("[107179]");
-                }
+				if (e.sMsg.Contains("[107179]"))
+				{
+					canBuyBeforeMarket = true;
+				}
+				else if(e.sMsg.Contains("[505217]"))
+				{
+					isCloseMarket = true;
+				}
 			}
 		}
 
@@ -61,6 +66,13 @@ namespace KOASampleCS
 			{
 				if (CoreManager.Instance.accountManager.credit == null)
 					return;
+
+				if (isCloseMarket)
+				{
+					Debug.WriteLine("장 종료 되었습니다.");
+					reserverOrderStockTimer.Stop();
+					return;
+				}
 
 				//시간외 거래가 가능한지 확인한다.
 				if (canBuyBeforeMarket)
