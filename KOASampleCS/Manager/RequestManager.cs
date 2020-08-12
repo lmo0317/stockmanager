@@ -81,6 +81,11 @@ namespace KOASampleCS
 			return buyStockDataList;
 		}
 
+        public int compare(BuyStockData left, BuyStockData right)
+        {
+            return (int)(right.changeRate * 100) - (int)(left.changeRate * 100);
+        }
+
 		private void AddBuyStockDataList(JArray stocks)
 		{
 			for (int i = 0; i < stocks.Count; i++)
@@ -113,6 +118,8 @@ namespace KOASampleCS
 				buyStockDataList.Add(buyStockData);
 				requestStockInfo(code);
 			}
+
+            buyStockDataList.Sort(compare);
 		}
 
 		private void requestStockInfo(String code)
