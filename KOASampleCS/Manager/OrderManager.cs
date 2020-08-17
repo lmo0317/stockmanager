@@ -23,14 +23,15 @@ namespace KOASampleCS
 			//[505182] 장개시전입니다.
 			//[571566] 주문불가능한종목입니다.
 			//[107179] 장개시전 시간외 매수주문이 완료되었습니다.
+			//[571489] 장이 열리지않는 날입니다.
 
 			if (e.sRQName == "주식주문")
 			{
-				if (e.sMsg.Contains("[107179]"))
+				if (e.sMsg.Contains("107179"))
 				{
 					canBuyBeforeMarket = true;
 				}
-				else if(e.sMsg.Contains("[505217]"))
+				else if (e.sMsg.Contains("505217") || e.sMsg.Contains("571489"))
 				{
 					isCloseMarket = true;
 				}
