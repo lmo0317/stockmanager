@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using KiwoomCode;
 using System.Diagnostics;
 using System.Threading;
 using KiwoomCode;
@@ -86,7 +85,7 @@ namespace KOASampleCS
 				{
 					//시간외 거래가 가능하지 않다면 0번째 종목을 구매해봐서 거래가 가능한지 확인한다.
 					checkCanBuyBeforeMarket();
-					Thread.Sleep(500);
+					Thread.Sleep(250);
 				}
 			}
 		}
@@ -118,7 +117,7 @@ namespace KOASampleCS
 		public void OrderStock(BuyStockData buyStockData, String orderType)
 		{
 			String code = buyStockData.code;
-			int value = buyStockData.value;
+			int regularPrice = buyStockData.regularPrice;
 			int count = buyStockData.count;
 			bool isBuy = buyStockData.isBuy;
 
@@ -148,7 +147,7 @@ namespace KOASampleCS
 
 			if (orderType == KOABiddingType.MARKET_PRICE || orderType == KOABiddingType.BEFORE_MARKET_EXTRA_TIME_CLOSING_PRICE)
 			{
-				value = 0;
+				regularPrice = 0;
 			}
 
 			// =================================================
@@ -159,12 +158,12 @@ namespace KOASampleCS
 						CoreManager.Instance.accountManager.credit, 
 						1,
 						code, 
-						count, 
-						value, 
+						count,
+						regularPrice, 
 						orderType, 
 						"");
 
-			Debug.WriteLine("<< 주문 >> {0} {1} {2}",code, count, value);
+			Debug.WriteLine("<< 주문 >> {0} {1} {2}", code, count, regularPrice);
 
 			if (lRet == 0)
 			{

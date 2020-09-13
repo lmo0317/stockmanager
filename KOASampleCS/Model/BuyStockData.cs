@@ -10,16 +10,45 @@ namespace KOASampleCS
 	{
 		public BuyStockData()
 		{
-
+			foreignPurchaseVolume = 0;
+			institutionPurchaseVolume = 0;
 		}
 
+		//beforeDay : 어제
+		//afterMarket : 장후
+		//regualrMarket : 장중
+		
 		public bool isBuy;
 		public String code;
 		public String name;
-		public int value;
+		public String stockState;
+
+		//구매 수량
 		public int count;
-		public float changeRate;
-		public int totalValue;
-		public int volume;
+
+		//전체 구매 가격
+		public int totalPrcie;
+		
+		//전일
+		public float beforeDayChangeRate;
+		public int beforeDayVolume;
+		public int beforeDayPrice;
+		
+		//장중
+		public float regularChangeRate;
+		public int regularVolume;
+		public int regularPrice;
+		public int regularOpeningPrice;
+		public float regularOpeningChangeRate;
+	
+		//장후
+		public float afterMarketChangeRate;
+		public int afterMarketVolume;
+		public int afterMarketPrice;
+		
+
+		//외인 기관 거래
+		public int foreignPurchaseVolume;
+		public int institutionPurchaseVolume;
 	}
 }

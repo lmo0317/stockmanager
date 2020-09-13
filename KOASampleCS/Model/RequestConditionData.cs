@@ -15,5 +15,11 @@ namespace KOASampleCS
 
 		public float changeRate;
 		public int volume;
+		public bool positiveForeignPurchase;
+		public bool positiveInstitutionPurchase;
+		public int foreignPurchaseValue;
+		public int institutionPurchaseValue;
+		public List<String> exceptionStockNameList = new List<String>();
+		public List<String> exceptionStockStateList = new List<String>();
 	}
 }

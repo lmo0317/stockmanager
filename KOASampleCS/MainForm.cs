@@ -24,7 +24,7 @@ using System.IO;
 
 namespace KOASampleCS
 {
-    public partial class Form1 : Form
+    public partial class MainForm : Form
     {
         // 실시간 연결 종료
         private void DisconnectAllRealData()
@@ -37,7 +37,7 @@ namespace KOASampleCS
 			ScreenUtil.scrNum = 5000;
         }
 
-        public Form1()
+        public MainForm()
         {
             InitializeComponent();
 			Init();
@@ -133,7 +133,7 @@ namespace KOASampleCS
 
 		private void 시간외주문ToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			BuyStockForm buyStockForm = new BuyStockForm();
+			AfterMarketBuyStockForm buyStockForm = new AfterMarketBuyStockForm();
 			buyStockForm.Show();
 		}
     }
