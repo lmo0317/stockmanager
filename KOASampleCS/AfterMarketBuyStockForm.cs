@@ -18,7 +18,6 @@ namespace KOASampleCS
 {
 	public partial class AfterMarketBuyStockForm : Form
 	{
-		AfterMarketBuyStockConditionForm afterMarketBuyStockConditionForm = new AfterMarketBuyStockConditionForm();
 		public static Dictionary<String, String> mapStockStateCodeToString = new Dictionary<String, String>();
 		
 		public static String CHECKBOX = "CHECKBOX";
@@ -30,6 +29,7 @@ namespace KOASampleCS
 		public static String AFTER_MARKET_PRICE = "시간외가격";
 		public static String AFTER_MARKET_CHANGE_RATE = "시간외대비율";
 		public static String AFTER_MARKET_VOLUME = "시간외체결량";
+		public static String AFTER_MARKET_TRADING_VALUE = "시간외거래대금";
 		
 		public static String BEFORE_DAY_PRICE = "전일가격";
 		public static String BEFORE_DAY_CHANGE_RATE = "전일대비율";
@@ -45,10 +45,9 @@ namespace KOASampleCS
 		public static String INSTITUTION_PURCHASE = "기관";
 
 		private string[] menus = { CHECKBOX, CODE, NAME, STOCK_STATE, COUNT, TOTAL_VALUE, 
-										AFTER_MARKET_PRICE, AFTER_MARKET_CHANGE_RATE, AFTER_MARKET_VOLUME,
+										AFTER_MARKET_PRICE, AFTER_MARKET_CHANGE_RATE, AFTER_MARKET_VOLUME, AFTER_MARKET_TRADING_VALUE,
 										BEFORE_DAY_PRICE, BEFORE_DAY_CHANGE_RATE, BEFORE_DAY_VOLUME,
-										REGULAR_OPENING_PRICE, REGULAR_OPENING_CHANGE_RATE, REGULAR_PRICE, REGULAR_CHANGE_RATE, REGULAR_VOLUME,										
-										FOREIGN_PURCHASE, INSTITUTION_PURCHASE };
+										REGULAR_OPENING_PRICE, REGULAR_OPENING_CHANGE_RATE, REGULAR_PRICE, REGULAR_CHANGE_RATE, REGULAR_VOLUME };
 
 		private void makeStockStateMap()
 		{
@@ -90,11 +89,11 @@ namespace KOASampleCS
 
 			dateTimePicker.Value = dateTime;
 
-			if (Config.isAutoStart)
-			{
-				reserveCheckBox.Checked = true;
-				getListForBuy_Click(null, null);
-			}
+			//if (Config.isAutoStart)
+			//{
+			//	reserveCheckBox.Checked = true;
+			//	getListForBuy_Click(null, null);
+			//}
 
 			makeStockDataGridViewDetail(false);
 			checkBoxDetail.Checked = false;
@@ -113,6 +112,7 @@ namespace KOASampleCS
 			}
 
 			stockDataGridView.Columns[getMenuIndex(CHECKBOX)].Width = 40;
+			stockDataGridView.Columns[getMenuIndex(AFTER_MARKET_TRADING_VALUE)].Width = 120;
 
 			stockDataGridView.Columns[1].Visible = false;
 		}
@@ -139,6 +139,7 @@ namespace KOASampleCS
 				String afterMarketChangeRate = (buyStockDataList[i].afterMarketChangeRate * 100).ToString("0.00");
 				String afterMarketVolume = buyStockDataList[i].afterMarketVolume.ToString("#,###");
 				String afterMarketPrice = buyStockDataList[i].afterMarketPrice.ToString("#,###");
+				String afterMarketTradingValue = (buyStockDataList[i].afterMarketTradingValue).ToString("#,###");
 
 				String beforeDayChangeRate = (buyStockDataList[i].beforeDayChangeRate * 100).ToString("0.00");
 				String beforeDayVolume = buyStockDataList[i].beforeDayVolume.ToString("#,###");
@@ -152,17 +153,16 @@ namespace KOASampleCS
 				if (institutionPurchaseVolume == "") institutionPurchaseVolume = "0";
 
 				stockDataGridView.Rows.Add(isBuy, code, name, stockState, count, totalPrcie,
-												afterMarketPrice, afterMarketChangeRate, afterMarketVolume,
+												afterMarketPrice, afterMarketChangeRate, afterMarketVolume, afterMarketTradingValue, 
 												beforeDayPrice, beforeDayChangeRate, beforeDayVolume,
-												regularOpeningPrice, regularOpeningChangeRate, regularPrice, regularChangeRate, regularVolume,
-												foreignPurchaseVolume, institutionPurchaseVolume);
+												regularOpeningPrice, regularOpeningChangeRate, regularPrice, regularChangeRate, regularVolume);
 
 				stockDataGridView.Rows[i].Cells[getMenuIndex(BEFORE_DAY_CHANGE_RATE)].Style.ForeColor = buyStockDataList[i].beforeDayChangeRate > 0 ? Color.Red : Color.Blue;
 				stockDataGridView.Rows[i].Cells[getMenuIndex(REGULAR_OPENING_CHANGE_RATE)].Style.ForeColor = buyStockDataList[i].regularOpeningChangeRate > 0 ? Color.Red : Color.Blue;
 				stockDataGridView.Rows[i].Cells[getMenuIndex(REGULAR_CHANGE_RATE)].Style.ForeColor = buyStockDataList[i].regularChangeRate > 0 ? Color.Red : Color.Blue;
 				stockDataGridView.Rows[i].Cells[getMenuIndex(AFTER_MARKET_CHANGE_RATE)].Style.ForeColor = buyStockDataList[i].afterMarketChangeRate > 0 ? Color.Red : Color.Blue;
-				stockDataGridView.Rows[i].Cells[getMenuIndex(FOREIGN_PURCHASE)].Style.ForeColor = buyStockDataList[i].foreignPurchaseVolume > 0 ? Color.Red : Color.Blue;
-				stockDataGridView.Rows[i].Cells[getMenuIndex(INSTITUTION_PURCHASE)].Style.ForeColor = buyStockDataList[i].institutionPurchaseVolume > 0 ? Color.Red : Color.Blue;
+				//stockDataGridView.Rows[i].Cells[getMenuIndex(FOREIGN_PURCHASE)].Style.ForeColor = buyStockDataList[i].foreignPurchaseVolume > 0 ? Color.Red : Color.Blue;
+				//stockDataGridView.Rows[i].Cells[getMenuIndex(INSTITUTION_PURCHASE)].Style.ForeColor = buyStockDataList[i].institutionPurchaseVolume > 0 ? Color.Red : Color.Blue;
 			}
 		}
 
@@ -240,6 +240,7 @@ namespace KOASampleCS
 
 		private void showConditionForm_Click(object sender, EventArgs e)
 		{
+			AfterMarketBuyStockConditionForm afterMarketBuyStockConditionForm = new AfterMarketBuyStockConditionForm();
 			afterMarketBuyStockConditionForm.Show();
 		}
 

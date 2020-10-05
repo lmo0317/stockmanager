@@ -23,7 +23,6 @@ namespace KOASampleCS
 			//[571566] 주문불가능한종목입니다.
 			//[107179] 장개시전 시간외 매수주문이 완료되었습니다.
 			//[571489] 장이 열리지않는 날입니다.
-
 			if (e.sRQName == "주식주문")
 			{
 				if (e.sMsg.Contains("107179"))
@@ -42,7 +41,6 @@ namespace KOASampleCS
 			reserverOrderStockTimer = new System.Windows.Forms.Timer();
 			reserverOrderStockTimer.Interval = 200;
 			reserverOrderStockTimer.Tick += new EventHandler(reserveOrderStockHandler);
-
 			reserveTime = new DateTime();
 		}
 
@@ -67,6 +65,7 @@ namespace KOASampleCS
 				if (CoreManager.Instance.accountManager.credit == null)
 					return;
 
+				/*
 				if (isCloseMarket)
 				{
 					Debug.WriteLine("장 종료 되었습니다.");
@@ -87,17 +86,11 @@ namespace KOASampleCS
 					checkCanBuyBeforeMarket();
 					Thread.Sleep(250);
 				}
+				*/
+
+				OrderEveryStock();
+				reserverOrderStockTimer.Stop();
 			}
-		}
-
-		public void checkCanBuyBeforeMarket()
-		{
-			List<BuyStockData> buyStockDataList = CoreManager.Instance.requestManager.getBuyStockDataList();
-
-			if (buyStockDataList.Count == 0)
-				return;
-
-			OrderStock(buyStockDataList[0], KOABiddingType.BEFORE_MARKET_EXTRA_TIME_CLOSING_PRICE);
 		}
 
 		public void OrderEveryStock()
@@ -107,7 +100,7 @@ namespace KOASampleCS
 			if (buyStockDataList.Count == 0)
 				return;
 			
-			for (int i = 1; i < buyStockDataList.Count; i++)
+			for (int i = 0; i < buyStockDataList.Count; i++)
 			{
 				OrderStock(buyStockDataList[i], KOABiddingType.BEFORE_MARKET_EXTRA_TIME_CLOSING_PRICE);
 				Thread.Sleep(250);

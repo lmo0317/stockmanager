@@ -54,6 +54,24 @@ namespace KOASampleCS
 			}
 		}
 
+		private ConditionSearchManager _conditionSearchManager = null;
+		public ConditionSearchManager conditionSearchManager
+		{
+			get
+			{
+				return _conditionSearchManager;
+			}
+		}
+
+		private FormManager _formManager = null;
+		public FormManager formManager
+		{
+			get
+			{
+				return _formManager;
+			}
+		}
+
 		private CoreManager()
 		{
 			_requestManager = new RequestManager();
@@ -61,6 +79,8 @@ namespace KOASampleCS
 			_moduleManager = new ModuleManager();
 			_accountManager = new AccountManager();
 			_receiveManager = new ReceiveManager();
+			_conditionSearchManager = new ConditionSearchManager();
+			_formManager = new FormManager();
 		}
 
 		private static CoreManager _instance = null;

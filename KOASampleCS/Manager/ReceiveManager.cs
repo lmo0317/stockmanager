@@ -4,11 +4,23 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using KiwoomCode;
+using System.Diagnostics;
+using System.Threading;
 
 namespace KOASampleCS
 {
 	class ReceiveManager
 	{
+		public void OnEventConnect(object sender, AxKHOpenAPILib._DKHOpenAPIEvents_OnEventConnectEvent e)
+		{
+			
+		}
+
+		public void OnReceiveConditionVer(object sender, AxKHOpenAPILib._DKHOpenAPIEvents_OnReceiveConditionVerEvent e)
+		{
+			CoreManager.Instance.conditionSearchManager.OnReceiveConditionVer();			
+		}
+
 		public void OnReceiveChejanData(object sender, AxKHOpenAPILib._DKHOpenAPIEvents_OnReceiveChejanDataEvent e)
 		{
 			if (e.sGubun == "0")
@@ -53,56 +65,33 @@ namespace KOASampleCS
 			}
 		}
 
+		public void OnReceiveTrCondition(object sender, AxKHOpenAPILib._DKHOpenAPIEvents_OnReceiveTrConditionEvent e)
+		{
+			String codeList = e.strCodeList.Trim();
+			if(codeList.Length > 0)
+			{
+				codeList = codeList.Remove(codeList.Length - 1);
+			}
+
+			int nCodeCount = codeList.Trim().Split(';').Length;
+
+			if(e.nNext == 2)
+			{
+				CoreManager.Instance.apiModule.SendCondition(e.sScrNo, e.strConditionName, e.nIndex, 2);
+			}
+
+			CoreManager.Instance.apiModule.CommKwRqData(codeList, 0, nCodeCount, 0, "관심종목정보", ScreenUtil.GetScrNum());
+		}
+
 		public void OnReceiveTrData(object sender, AxKHOpenAPILib._DKHOpenAPIEvents_OnReceiveTrDataEvent e)
 		{
-			if (e.sRQName == "주식주문")
+			if(e.sRQName == "관심종목정보")
 			{
-				string s원주문번호 = CoreManager.Instance.apiModule.GetCommData(e.sTrCode, "", 0, "").Trim();
-
-				long n원주문번호 = 0;
-				bool canConvert = long.TryParse(s원주문번호, out n원주문번호);
-
-				//if (canConvert == true)
-				//    txt원주문번호.Text = s원주문번호;
-				//else
-				//    Logger(Log.에러, "잘못된 원주문번호 입니다");
-
+				CoreManager.Instance.conditionSearchManager.OnReceiveTrData(e);
 			}
-			// OPT1001 : 주식기본정보
-			else if (e.sRQName == "주식기본정보")
+			else if(e.sRQName == "시간외단일가요청")
 			{
-				int nCnt = CoreManager.Instance.apiModule.GetRepeatCnt(e.sTrCode, e.sRQName);
-
-				/*
-                for (int i = 0; i < nCnt; i++)
-                {
-                    Logger(Log.조회, "{0} | 현재가:{1:N0} | 등락율:{2} | 거래량:{3:N0} ",
-                        axKHOpenAPI.CommGetData(e.sTrCode, "", e.sRQName, i, "종목명").Trim(),
-                        Int32.Parse(axKHOpenAPI.CommGetData(e.sTrCode, "", e.sRQName, i, "현재가").Trim()),
-                        axKHOpenAPI.CommGetData(e.sTrCode, "", e.sRQName, i, "등락율").Trim(),
-                        Int32.Parse(axKHOpenAPI.CommGetData(e.sTrCode, "", e.sRQName, i, "거래량").Trim()));
-                }
-				*/
-				string code = CoreManager.Instance.apiModule.CommGetData(e.sTrCode, "", e.sRQName, 0, "종목코드").Trim();
-				long stockPrice = long.Parse(CoreManager.Instance.apiModule.GetCommData(e.sTrCode, e.sRQName, 0, "현재가").Trim().Replace("-", ""));
-				long volume = long.Parse(CoreManager.Instance.apiModule.GetCommData(e.sTrCode, e.sRQName, 0, "거래량").Trim());
-				long marketCapitalization = long.Parse(CoreManager.Instance.apiModule.GetCommData(e.sTrCode, e.sRQName, 0, "시가총액").Trim());
-				//string upDownRate = axKHOpenAPI.GetCommData(e.sTrCode, e.sRQName, 0, "등락율").Trim();
-			}
-			// OPT10081 : 주식일봉차트조회
-			else if (e.sRQName == "주식일봉차트조회")
-			{
-				int nCnt = CoreManager.Instance.apiModule.GetRepeatCnt(e.sTrCode, e.sRQName);
-				for (int i = 0; i < nCnt; i++)
-				{
-					LoggerUtil.Logger(Log.조회, "{0} | 현재가:{1:N0} | 거래량:{2:N0} | 시가:{3:N0} | 고가:{4:N0} | 저가:{5:N0} ",
-						CoreManager.Instance.apiModule.CommGetData(e.sTrCode, "", e.sRQName, i, "일자").Trim(),
-						Int32.Parse(CoreManager.Instance.apiModule.CommGetData(e.sTrCode, "", e.sRQName, i, "현재가").Trim()),
-						Int32.Parse(CoreManager.Instance.apiModule.CommGetData(e.sTrCode, "", e.sRQName, i, "거래량").Trim()),
-						Int32.Parse(CoreManager.Instance.apiModule.CommGetData(e.sTrCode, "", e.sRQName, i, "시가").Trim()),
-						Int32.Parse(CoreManager.Instance.apiModule.CommGetData(e.sTrCode, "", e.sRQName, i, "고가").Trim()),
-						Int32.Parse(CoreManager.Instance.apiModule.CommGetData(e.sTrCode, "", e.sRQName, i, "저가").Trim()));
-				}
+				CoreManager.Instance.conditionSearchManager.RequestAftermarketTrading(e);
 			}
 		}
 	}

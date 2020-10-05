@@ -33,9 +33,12 @@
 			this.checkBoxInstitution = new System.Windows.Forms.CheckBox();
 			this.checkBoxForeign = new System.Windows.Forms.CheckBox();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
+			this.label4 = new System.Windows.Forms.Label();
+			this.conditionChangeRateMax = new System.Windows.Forms.TextBox();
+			this.label1 = new System.Windows.Forms.Label();
 			this.conditionVolume = new System.Windows.Forms.TextBox();
 			this.label2 = new System.Windows.Forms.Label();
-			this.conditionChangeRate = new System.Windows.Forms.TextBox();
+			this.conditionChangeRateMin = new System.Windows.Forms.TextBox();
 			this.label3 = new System.Windows.Forms.Label();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
 			this.groupBox3 = new System.Windows.Forms.GroupBox();
@@ -43,6 +46,8 @@
 			this.checkBoxCaution = new System.Windows.Forms.CheckBox();
 			this.checkBoxRisk = new System.Windows.Forms.CheckBox();
 			this.checkBoxAlert = new System.Windows.Forms.CheckBox();
+			this.conditionTradingValue = new System.Windows.Forms.TextBox();
+			this.label5 = new System.Windows.Forms.Label();
 			this.groupBox1.SuspendLayout();
 			this.groupBox2.SuspendLayout();
 			this.groupBox3.SuspendLayout();
@@ -90,16 +95,48 @@
 			// 
 			// groupBox1
 			// 
+			this.groupBox1.Controls.Add(this.conditionTradingValue);
+			this.groupBox1.Controls.Add(this.label5);
+			this.groupBox1.Controls.Add(this.label4);
+			this.groupBox1.Controls.Add(this.conditionChangeRateMax);
+			this.groupBox1.Controls.Add(this.label1);
 			this.groupBox1.Controls.Add(this.conditionVolume);
 			this.groupBox1.Controls.Add(this.label2);
-			this.groupBox1.Controls.Add(this.conditionChangeRate);
+			this.groupBox1.Controls.Add(this.conditionChangeRateMin);
 			this.groupBox1.Controls.Add(this.label3);
 			this.groupBox1.Location = new System.Drawing.Point(13, 13);
 			this.groupBox1.Name = "groupBox1";
-			this.groupBox1.Size = new System.Drawing.Size(662, 122);
+			this.groupBox1.Size = new System.Drawing.Size(662, 211);
 			this.groupBox1.TabIndex = 48;
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "조건1";
+			// 
+			// label4
+			// 
+			this.label4.AutoSize = true;
+			this.label4.Location = new System.Drawing.Point(431, 34);
+			this.label4.Name = "label4";
+			this.label4.Size = new System.Drawing.Size(44, 18);
+			this.label4.TabIndex = 48;
+			this.label4.Text = "이하";
+			// 
+			// conditionChangeRateMax
+			// 
+			this.conditionChangeRateMax.Location = new System.Drawing.Point(301, 31);
+			this.conditionChangeRateMax.Margin = new System.Windows.Forms.Padding(4);
+			this.conditionChangeRateMax.Name = "conditionChangeRateMax";
+			this.conditionChangeRateMax.Size = new System.Drawing.Size(123, 28);
+			this.conditionChangeRateMax.TabIndex = 47;
+			this.conditionChangeRateMax.TextChanged += new System.EventHandler(this.conditionChangeRateMax_TextChanged);
+			// 
+			// label1
+			// 
+			this.label1.AutoSize = true;
+			this.label1.Location = new System.Drawing.Point(219, 31);
+			this.label1.Name = "label1";
+			this.label1.Size = new System.Drawing.Size(44, 18);
+			this.label1.TabIndex = 46;
+			this.label1.Text = "이상";
 			// 
 			// conditionVolume
 			// 
@@ -120,14 +157,14 @@
 			this.label2.TabIndex = 44;
 			this.label2.Text = "체결량";
 			// 
-			// conditionChangeRate
+			// conditionChangeRateMin
 			// 
-			this.conditionChangeRate.Location = new System.Drawing.Point(89, 28);
-			this.conditionChangeRate.Margin = new System.Windows.Forms.Padding(4);
-			this.conditionChangeRate.Name = "conditionChangeRate";
-			this.conditionChangeRate.Size = new System.Drawing.Size(215, 28);
-			this.conditionChangeRate.TabIndex = 43;
-			this.conditionChangeRate.TextChanged += new System.EventHandler(this.conditionChangeRate_TextChanged);
+			this.conditionChangeRateMin.Location = new System.Drawing.Point(89, 28);
+			this.conditionChangeRateMin.Margin = new System.Windows.Forms.Padding(4);
+			this.conditionChangeRateMin.Name = "conditionChangeRateMin";
+			this.conditionChangeRateMin.Size = new System.Drawing.Size(123, 28);
+			this.conditionChangeRateMin.TabIndex = 43;
+			this.conditionChangeRateMin.TextChanged += new System.EventHandler(this.conditionChangeRateMin_TextChanged);
 			// 
 			// label3
 			// 
@@ -145,7 +182,7 @@
 			this.groupBox2.Controls.Add(this.checkBoxForeign);
 			this.groupBox2.Controls.Add(this.checkBoxInstitution);
 			this.groupBox2.Controls.Add(this.conditionInstitutionPurchaseValue);
-			this.groupBox2.Location = new System.Drawing.Point(13, 142);
+			this.groupBox2.Location = new System.Drawing.Point(12, 230);
 			this.groupBox2.Name = "groupBox2";
 			this.groupBox2.Size = new System.Drawing.Size(662, 110);
 			this.groupBox2.TabIndex = 49;
@@ -158,7 +195,7 @@
 			this.groupBox3.Controls.Add(this.checkBoxCaution);
 			this.groupBox3.Controls.Add(this.checkBoxRisk);
 			this.groupBox3.Controls.Add(this.checkBoxAlert);
-			this.groupBox3.Location = new System.Drawing.Point(13, 259);
+			this.groupBox3.Location = new System.Drawing.Point(12, 347);
 			this.groupBox3.Name = "groupBox3";
 			this.groupBox3.Size = new System.Drawing.Size(662, 238);
 			this.groupBox3.TabIndex = 50;
@@ -209,6 +246,25 @@
 			this.checkBoxAlert.UseVisualStyleBackColor = true;
 			this.checkBoxAlert.CheckedChanged += new System.EventHandler(this.checkBoxAlert_CheckedChanged);
 			// 
+			// conditionTradingValue
+			// 
+			this.conditionTradingValue.Location = new System.Drawing.Point(89, 106);
+			this.conditionTradingValue.Margin = new System.Windows.Forms.Padding(4);
+			this.conditionTradingValue.Name = "conditionTradingValue";
+			this.conditionTradingValue.Size = new System.Drawing.Size(215, 28);
+			this.conditionTradingValue.TabIndex = 50;
+			this.conditionTradingValue.TextChanged += new System.EventHandler(this.conditionTradingValue_TextChanged);
+			// 
+			// label5
+			// 
+			this.label5.AutoSize = true;
+			this.label5.Location = new System.Drawing.Point(4, 106);
+			this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+			this.label5.Name = "label5";
+			this.label5.Size = new System.Drawing.Size(80, 18);
+			this.label5.TabIndex = 49;
+			this.label5.Text = "거래대금";
+			// 
 			// AfterMarketBuyStockConditionForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 18F);
@@ -238,7 +294,7 @@
 		private System.Windows.Forms.GroupBox groupBox1;
 		private System.Windows.Forms.TextBox conditionVolume;
 		private System.Windows.Forms.Label label2;
-		private System.Windows.Forms.TextBox conditionChangeRate;
+		private System.Windows.Forms.TextBox conditionChangeRateMin;
 		private System.Windows.Forms.Label label3;
 		private System.Windows.Forms.GroupBox groupBox2;
 		private System.Windows.Forms.GroupBox groupBox3;
@@ -246,5 +302,10 @@
 		private System.Windows.Forms.CheckBox checkBoxRisk;
 		private System.Windows.Forms.CheckBox checkBoxAlert;
 		private System.Windows.Forms.CheckBox checkBoxAdministrative;
+		private System.Windows.Forms.Label label4;
+		private System.Windows.Forms.TextBox conditionChangeRateMax;
+		private System.Windows.Forms.Label label1;
+		private System.Windows.Forms.TextBox conditionTradingValue;
+		private System.Windows.Forms.Label label5;
 	}
 }

@@ -11,14 +11,16 @@ namespace KOASampleCS
 		//주문 시간
 		public static int ORDER_TIME_HOUR = 8;
 		public static int ORDER_TIME_MINUTE = 29;
-		public static int ORDER_TIME_SECOND = 30;
+		public static int ORDER_TIME_SECOND = 58;
 		
 		//주문양
 		public static int ORDER_TOTAL_AMOUNT = 500000;
 		
 		//검색 조건
-		public static float DEFAULT_CHANGE_RATE = 3.0f;
-		public static int DEFAULT_VOLUME = 5000;
+		public static float DEFAULT_CHANGE_RATE_MIN = 2.0f;
+		public static float DEFAULT_CHANGE_RATE_MAX = 10.0f;
+		public static int DEFAULT_VOLUME = 1000;
+		public static int DEFAULT_TRADING_VALUE = 100000000;
 
 		//기관, 외인 매수
 		public static bool DEFAULT_POSITIVE_FOREIGN_PURCHASE = false;

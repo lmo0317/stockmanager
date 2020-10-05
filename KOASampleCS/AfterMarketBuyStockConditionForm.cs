@@ -20,8 +20,11 @@ namespace KOASampleCS
 
 		private void Init()
 		{
-			conditionChangeRate.Text = (Config.DEFAULT_CHANGE_RATE).ToString();
+			conditionChangeRateMin.Text = (Config.DEFAULT_CHANGE_RATE_MIN).ToString();
+			conditionChangeRateMax.Text = (Config.DEFAULT_CHANGE_RATE_MAX).ToString();
+
 			conditionVolume.Text = (Config.DEFAULT_VOLUME).ToString();
+			conditionTradingValue.Text = (Config.DEFAULT_TRADING_VALUE).ToString();
 			conditionForeignPurchaseValue.Text = (Config.DEFAULT_FOREIGN_PURCHASE_VALUE).ToString();
 			conditionInstitutionPurchaseValue.Text = (Config.DEFAULT_INSTITUTION_PURCHASE_VALUE).ToString();
 
@@ -34,20 +37,20 @@ namespace KOASampleCS
 			checkBoxAdministrative.Checked = true;
 		}
 
-		private void conditionChangeRate_TextChanged(object sender, EventArgs e)
-		{
-			if (conditionChangeRate.Text == "")
-				return;
-
-			CoreManager.Instance.requestManager.requestConditionData.changeRate = float.Parse(conditionChangeRate.Text);
-		}
-
 		private void conditionVolume_TextChanged(object sender, EventArgs e)
 		{
 			if (conditionVolume.Text == "")
 				return;
 
 			CoreManager.Instance.requestManager.requestConditionData.volume = Int32.Parse(conditionVolume.Text);
+		}
+
+		private void conditionTradingValue_TextChanged(object sender, EventArgs e)
+		{
+			if (conditionTradingValue.Text == "")
+				return;
+
+			CoreManager.Instance.requestManager.requestConditionData.tradingValue = Int64.Parse(conditionTradingValue.Text);
 		}
 
 		private void checkBoxForeign_CheckedChanged(object sender, EventArgs e)
@@ -124,6 +127,22 @@ namespace KOASampleCS
 			{
 				CoreManager.Instance.requestManager.requestConditionData.exceptionStockStateList.Remove(Enums.STOCK_STATE_ADMINISTRATIVE);
 			}
+		}
+
+		private void conditionChangeRateMin_TextChanged(object sender, EventArgs e)
+		{
+			if (conditionChangeRateMin.Text == "")
+				return;
+
+			CoreManager.Instance.requestManager.requestConditionData.changeRateMin = float.Parse(conditionChangeRateMin.Text);
+		}
+
+		private void conditionChangeRateMax_TextChanged(object sender, EventArgs e)
+		{
+			if (conditionChangeRateMax.Text == "")
+				return;
+
+			CoreManager.Instance.requestManager.requestConditionData.changeRateMax = float.Parse(conditionChangeRateMax.Text);
 		}
 	}
 }

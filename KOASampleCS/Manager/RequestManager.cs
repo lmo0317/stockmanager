@@ -96,9 +96,17 @@ namespace KOASampleCS
 			return (int)(left.afterMarketChangeRate * 10000) - (int)(right.afterMarketChangeRate * 10000);
         }
 
-		private bool isBlackListStockName(String name)
+		private bool isExceptionStockName(String name)
 		{
-			return name.Contains("선물") || name.Contains("셀트리온");
+			for(int i=0; i<requestConditionData.exceptionStockNameList.Count; i++)
+			{
+				if(name.Contains(requestConditionData.exceptionStockNameList[i]))
+				{
+					return true;
+				}
+			}
+
+			return false;
 		}
 
 		private bool checkSupplyAndDemand(float changeRate, int foreignPurchaseVolume, int institutionPurchaseVolume)
@@ -124,17 +132,24 @@ namespace KOASampleCS
 				String code = stocks[i]["symbolCode"].ToString().Substring(1, 6);
 				String name = stocks[i]["name"].ToString();
 
-				if (isBlackListStockName(name))
+				if (isExceptionStockName(name))
 					continue;
 
 				float afterMarketChangeRate = float.Parse(stocks[i]["changeRate"].ToString());
-				int afterMarketVolume = Int32.Parse(stocks[i]["accTradeVolume"].ToString());
-				int afterMarketPrice = Int32.Parse(stocks[i]["tradePrice"].ToString());
+				Int64 afterMarketVolume = Int64.Parse(stocks[i]["accTradeVolume"].ToString());
+				Int64 afterMarketPrice = Int64.Parse(stocks[i]["tradePrice"].ToString());
+				Int64 afterMarketTradingValue = afterMarketVolume * afterMarketPrice;
 
-				if (afterMarketChangeRate < (requestConditionData.changeRate / 100))
+				if (afterMarketChangeRate < (requestConditionData.changeRateMin / 100))
+					continue;
+
+				if (afterMarketChangeRate > (requestConditionData.changeRateMax / 100))
 					continue;
 
 				if (afterMarketVolume < requestConditionData.volume)
+					continue;
+
+				if (afterMarketTradingValue < requestConditionData.tradingValue)
 					continue;
 
 				JArray investorDays = requestStockInvestorDays(code); //기관, 외국인 거래
@@ -191,6 +206,7 @@ namespace KOASampleCS
 				buyStockData.afterMarketChangeRate = afterMarketChangeRate;
 				buyStockData.afterMarketVolume = afterMarketVolume;
 				buyStockData.afterMarketPrice = afterMarketPrice;
+				buyStockData.afterMarketTradingValue = afterMarketTradingValue;
 
 				buyStockData.beforeDayChangeRate = beforeDayChangeRate;
 				buyStockData.beforeDayVolume = beforeDayVolume;

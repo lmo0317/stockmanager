@@ -37,7 +37,8 @@
 			this.계좌조회ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.종료ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.조회기능ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.시간외주문ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.조건식ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.조건식조회ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.axKHOpenAPI = new AxKHOpenAPILib.AxKHOpenAPI();
 			this.tabControl1 = new System.Windows.Forms.TabControl();
 			this.API_LOG = new System.Windows.Forms.TabPage();
@@ -51,6 +52,7 @@
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
 			this.label3 = new System.Windows.Forms.Label();
 			this.cbo계좌 = new System.Windows.Forms.ComboBox();
+			this.시간외주문ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuStrip.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.axKHOpenAPI)).BeginInit();
 			this.tabControl1.SuspendLayout();
@@ -66,7 +68,8 @@
 			this.menuStrip.ImageScalingSize = new System.Drawing.Size(24, 24);
 			this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.기본기능ToolStripMenuItem,
-            this.조회기능ToolStripMenuItem});
+            this.조회기능ToolStripMenuItem,
+            this.조건식ToolStripMenuItem});
 			this.menuStrip.Location = new System.Drawing.Point(0, 0);
 			this.menuStrip.Name = "menuStrip";
 			this.menuStrip.Padding = new System.Windows.Forms.Padding(9, 3, 0, 3);
@@ -89,56 +92,62 @@
 			// 로그인ToolStripMenuItem
 			// 
 			this.로그인ToolStripMenuItem.Name = "로그인ToolStripMenuItem";
-			this.로그인ToolStripMenuItem.Size = new System.Drawing.Size(210, 30);
+			this.로그인ToolStripMenuItem.Size = new System.Drawing.Size(168, 30);
 			this.로그인ToolStripMenuItem.Text = "로그인";
 			this.로그인ToolStripMenuItem.Click += new System.EventHandler(this.로그인ToolStripMenuItem_Click);
 			// 
 			// 로그아웃ToolStripMenuItem
 			// 
 			this.로그아웃ToolStripMenuItem.Name = "로그아웃ToolStripMenuItem";
-			this.로그아웃ToolStripMenuItem.Size = new System.Drawing.Size(210, 30);
+			this.로그아웃ToolStripMenuItem.Size = new System.Drawing.Size(168, 30);
 			this.로그아웃ToolStripMenuItem.Text = "로그아웃";
 			this.로그아웃ToolStripMenuItem.Click += new System.EventHandler(this.로그아웃ToolStripMenuItem_Click);
 			// 
 			// 접속상태ToolStripMenuItem
 			// 
 			this.접속상태ToolStripMenuItem.Name = "접속상태ToolStripMenuItem";
-			this.접속상태ToolStripMenuItem.Size = new System.Drawing.Size(210, 30);
+			this.접속상태ToolStripMenuItem.Size = new System.Drawing.Size(168, 30);
 			this.접속상태ToolStripMenuItem.Text = "접속상태";
 			this.접속상태ToolStripMenuItem.Click += new System.EventHandler(this.접속상태ToolStripMenuItem_Click);
 			// 
 			// 계좌조회ToolStripMenuItem
 			// 
 			this.계좌조회ToolStripMenuItem.Name = "계좌조회ToolStripMenuItem";
-			this.계좌조회ToolStripMenuItem.Size = new System.Drawing.Size(210, 30);
+			this.계좌조회ToolStripMenuItem.Size = new System.Drawing.Size(168, 30);
 			this.계좌조회ToolStripMenuItem.Text = "계좌조회";
 			this.계좌조회ToolStripMenuItem.Click += new System.EventHandler(this.계좌조회ToolStripMenuItem_Click);
 			// 
 			// 종료ToolStripMenuItem
 			// 
 			this.종료ToolStripMenuItem.Name = "종료ToolStripMenuItem";
-			this.종료ToolStripMenuItem.Size = new System.Drawing.Size(210, 30);
+			this.종료ToolStripMenuItem.Size = new System.Drawing.Size(168, 30);
 			this.종료ToolStripMenuItem.Text = "종료";
 			this.종료ToolStripMenuItem.Click += new System.EventHandler(this.종료ToolStripMenuItem_Click);
 			// 
 			// 조회기능ToolStripMenuItem
 			// 
-			this.조회기능ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.시간외주문ToolStripMenuItem});
 			this.조회기능ToolStripMenuItem.Name = "조회기능ToolStripMenuItem";
 			this.조회기능ToolStripMenuItem.Size = new System.Drawing.Size(60, 29);
 			this.조회기능ToolStripMenuItem.Text = "주문";
 			// 
-			// 시간외주문ToolStripMenuItem
+			// 조건식ToolStripMenuItem
 			// 
-			this.시간외주문ToolStripMenuItem.Name = "시간외주문ToolStripMenuItem";
-			this.시간외주문ToolStripMenuItem.Size = new System.Drawing.Size(210, 30);
-			this.시간외주문ToolStripMenuItem.Text = "시간외주문";
-			this.시간외주문ToolStripMenuItem.Click += new System.EventHandler(this.시간외주문ToolStripMenuItem_Click);
+			this.조건식ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.시간외주문ToolStripMenuItem,
+            this.조건식조회ToolStripMenuItem});
+			this.조건식ToolStripMenuItem.Name = "조건식ToolStripMenuItem";
+			this.조건식ToolStripMenuItem.Size = new System.Drawing.Size(60, 29);
+			this.조건식ToolStripMenuItem.Text = "조회";
+			// 
+			// 조건식조회ToolStripMenuItem
+			// 
+			this.조건식조회ToolStripMenuItem.Name = "조건식조회ToolStripMenuItem";
+			this.조건식조회ToolStripMenuItem.Size = new System.Drawing.Size(210, 30);
+			this.조건식조회ToolStripMenuItem.Text = "조건식조회";
+			this.조건식조회ToolStripMenuItem.Click += new System.EventHandler(this.조건식조회ToolStripMenuItem_Click);
 			// 
 			// axKHOpenAPI
 			// 
-			ReceiveManager receiveManager = CoreManager.Instance.receiveManager;
 			this.axKHOpenAPI.Enabled = true;
 			this.axKHOpenAPI.Location = new System.Drawing.Point(7, 593);
 			this.axKHOpenAPI.Margin = new System.Windows.Forms.Padding(4);
@@ -146,11 +155,13 @@
 			this.axKHOpenAPI.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("axKHOpenAPI.OcxState")));
 			this.axKHOpenAPI.Size = new System.Drawing.Size(96, 29);
 			this.axKHOpenAPI.TabIndex = 11;
-			this.axKHOpenAPI.OnReceiveTrData += new AxKHOpenAPILib._DKHOpenAPIEvents_OnReceiveTrDataEventHandler(receiveManager.OnReceiveTrData);
-			this.axKHOpenAPI.OnReceiveRealData += new AxKHOpenAPILib._DKHOpenAPIEvents_OnReceiveRealDataEventHandler(receiveManager.OnReceiveRealData);
-			this.axKHOpenAPI.OnReceiveMsg += new AxKHOpenAPILib._DKHOpenAPIEvents_OnReceiveMsgEventHandler(receiveManager.OnReceiveMsg);
-			this.axKHOpenAPI.OnReceiveChejanData += new AxKHOpenAPILib._DKHOpenAPIEvents_OnReceiveChejanDataEventHandler(receiveManager.OnReceiveChejanData);
 			this.axKHOpenAPI.OnEventConnect += new AxKHOpenAPILib._DKHOpenAPIEvents_OnEventConnectEventHandler(this.axKHOpenAPI_OnEventConnect);
+			this.axKHOpenAPI.OnReceiveTrData += new AxKHOpenAPILib._DKHOpenAPIEvents_OnReceiveTrDataEventHandler(this.axKHOpenAPI_OnReceiveTrData);
+			this.axKHOpenAPI.OnReceiveRealData += new AxKHOpenAPILib._DKHOpenAPIEvents_OnReceiveRealDataEventHandler(this.axKHOpenAPI_OnReceiveRealData);
+			this.axKHOpenAPI.OnReceiveMsg += new AxKHOpenAPILib._DKHOpenAPIEvents_OnReceiveMsgEventHandler(this.axKHOpenAPI_OnReceiveMsg);
+			this.axKHOpenAPI.OnReceiveChejanData += new AxKHOpenAPILib._DKHOpenAPIEvents_OnReceiveChejanDataEventHandler(this.axKHOpenAPI_OnReceiveChejanData);
+			this.axKHOpenAPI.OnReceiveConditionVer += new AxKHOpenAPILib._DKHOpenAPIEvents_OnReceiveConditionVerEventHandler(this.axKHOpenAPI_OnReceiveConditionVer);
+			this.axKHOpenAPI.OnReceiveTrCondition += new AxKHOpenAPILib._DKHOpenAPIEvents_OnReceiveTrConditionEventHandler(this.axKHOpenAPI_OnReceiveTrCondition);
 			// 
 			// tabControl1
 			// 
@@ -296,6 +307,13 @@
 			this.cbo계좌.TabIndex = 24;
 			this.cbo계좌.SelectedIndexChanged += new System.EventHandler(this.cbo계좌_SelectedIndexChanged);
 			// 
+			// 시간외주문ToolStripMenuItem
+			// 
+			this.시간외주문ToolStripMenuItem.Name = "시간외주문ToolStripMenuItem";
+			this.시간외주문ToolStripMenuItem.Size = new System.Drawing.Size(210, 30);
+			this.시간외주문ToolStripMenuItem.Text = "시간외 단일가";
+			this.시간외주문ToolStripMenuItem.Click += new System.EventHandler(this.시간외주문ToolStripMenuItem_Click_1);
+			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 18F);
@@ -347,6 +365,8 @@
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Label label3;
 		private System.Windows.Forms.ComboBox cbo계좌;
+		private System.Windows.Forms.ToolStripMenuItem 조건식ToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem 조건식조회ToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem 시간외주문ToolStripMenuItem;
     }
 }

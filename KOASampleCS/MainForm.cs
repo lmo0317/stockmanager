@@ -51,11 +51,11 @@ namespace KOASampleCS
 			LoggerUtil.lst일반 = lst일반;
 			CoreManager.Instance.moduleManager.openApiModule = axKHOpenAPI;
 
-			if (Config.isAutoStart)
-			{
-				axKHOpenAPI.CommConnect();
-				시간외주문ToolStripMenuItem_Click(null, null);
-			}
+			//if (Config.isAutoStart)
+			//{
+			//	axKHOpenAPI.CommConnect();
+			//	시간외주문ToolStripMenuItem_Click(null, null);
+			//}
 		}
 
         // 로그를 출력합니다.
@@ -115,7 +115,39 @@ namespace KOASampleCS
             {
                 Logger(Log.에러, "[로그인 처리결과] " + Error.GetErrorMessage());
             }
+
+			CoreManager.Instance.receiveManager.OnEventConnect(sender, e);
         }
+
+		private void axKHOpenAPI_OnReceiveTrData(object sender, AxKHOpenAPILib._DKHOpenAPIEvents_OnReceiveTrDataEvent e)
+		{
+			CoreManager.Instance.receiveManager.OnReceiveTrData(sender, e);
+		}
+
+		private void axKHOpenAPI_OnReceiveRealData(object sender, AxKHOpenAPILib._DKHOpenAPIEvents_OnReceiveRealDataEvent e)
+		{
+			CoreManager.Instance.receiveManager.OnReceiveRealData(sender, e);
+		}
+
+		private void axKHOpenAPI_OnReceiveMsg(object sender, AxKHOpenAPILib._DKHOpenAPIEvents_OnReceiveMsgEvent e)
+		{
+			CoreManager.Instance.receiveManager.OnReceiveMsg(sender, e);
+		}
+
+		private void axKHOpenAPI_OnReceiveChejanData(object sender, AxKHOpenAPILib._DKHOpenAPIEvents_OnReceiveChejanDataEvent e)
+		{
+			CoreManager.Instance.receiveManager.OnReceiveChejanData(sender, e);
+		}
+
+		private void axKHOpenAPI_OnReceiveConditionVer(object sender, AxKHOpenAPILib._DKHOpenAPIEvents_OnReceiveConditionVerEvent e)
+		{
+			CoreManager.Instance.receiveManager.OnReceiveConditionVer(sender, e);
+		}
+
+		private void axKHOpenAPI_OnReceiveTrCondition(object sender, AxKHOpenAPILib._DKHOpenAPIEvents_OnReceiveTrConditionEvent e)
+		{
+			CoreManager.Instance.receiveManager.OnReceiveTrCondition(sender, e);
+		}
 
         private void 계좌조회ToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -130,8 +162,15 @@ namespace KOASampleCS
 		{
 			CoreManager.Instance.accountManager.credit = cbo계좌.Items[cbo계좌.SelectedIndex].ToString();
 		}
+		
+		private void 조건식조회ToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			ConditionSearchForm conditionSearchForm = new ConditionSearchForm();
+			CoreManager.Instance.formManager.conditionSearchForm = conditionSearchForm;
+			conditionSearchForm.Show();
+		}
 
-		private void 시간외주문ToolStripMenuItem_Click(object sender, EventArgs e)
+		private void 시간외주문ToolStripMenuItem_Click_1(object sender, EventArgs e)
 		{
 			AfterMarketBuyStockForm buyStockForm = new AfterMarketBuyStockForm();
 			buyStockForm.Show();

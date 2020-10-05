@@ -43,8 +43,9 @@ namespace KOASampleCS
 	
 		//장후
 		public float afterMarketChangeRate;
-		public int afterMarketVolume;
-		public int afterMarketPrice;
+		public Int64 afterMarketVolume;
+		public Int64 afterMarketPrice;
+		public Int64 afterMarketTradingValue;
 		
 
 		//외인 기관 거래
