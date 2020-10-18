@@ -172,8 +172,8 @@ namespace KOASampleCS
 
 		private void 시간외주문ToolStripMenuItem_Click_1(object sender, EventArgs e)
 		{
-			AfterMarketBuyStockForm buyStockForm = new AfterMarketBuyStockForm();
-			buyStockForm.Show();
+			AfterMarketStockListForm afterMarketStockListForm = new AfterMarketStockListForm();
+			afterMarketStockListForm.Show();
 		}
     }
 }

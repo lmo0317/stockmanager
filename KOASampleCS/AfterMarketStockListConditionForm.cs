@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace KOASampleCS
 {
-	public partial class AfterMarketBuyStockConditionForm : Form
+	public partial class AfterMarketStockListConditionForm : Form
 	{
-		public AfterMarketBuyStockConditionForm()
+		public AfterMarketStockListConditionForm()
 		{
 			InitializeComponent();
 			Init();

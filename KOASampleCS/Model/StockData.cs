@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace KOASampleCS
 {
-	class BuyStockData
+	class StockData
 	{
-		public BuyStockData()
+		public StockData()
 		{
 			foreignPurchaseVolume = 0;
 			institutionPurchaseVolume = 0;

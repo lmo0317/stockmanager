@@ -1,6 +1,6 @@
 ﻿namespace KOASampleCS
 {
-	partial class AfterMarketBuyStockConditionForm
+	partial class AfterMarketStockListConditionForm
 	{
 		/// <summary>
 		/// Required designer variable.
@@ -273,8 +273,8 @@
 			this.Controls.Add(this.groupBox3);
 			this.Controls.Add(this.groupBox2);
 			this.Controls.Add(this.groupBox1);
-			this.Name = "AfterMarketBuyStockConditionForm";
-			this.Text = "AfterMarketBuyStockCondition";
+			this.Name = "AfterMarketStockListConditionForm";
+			this.Text = "AfterMarketStockListCondition";
 			this.groupBox1.ResumeLayout(false);
 			this.groupBox1.PerformLayout();
 			this.groupBox2.ResumeLayout(false);

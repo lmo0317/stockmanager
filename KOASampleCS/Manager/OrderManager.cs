@@ -15,6 +15,7 @@ namespace KOASampleCS
 		private DateTime reserveTime;
 		private bool isCloseMarket = false;
 		private bool canBuyBeforeMarket = false;
+		List<StockData> reserveStockDataList = new List<StockData>();
 
 		public void OnReceiveMsg(AxKHOpenAPILib._DKHOpenAPIEvents_OnReceiveMsgEvent e)
 		{
@@ -65,29 +66,6 @@ namespace KOASampleCS
 				if (CoreManager.Instance.accountManager.credit == null)
 					return;
 
-				/*
-				if (isCloseMarket)
-				{
-					Debug.WriteLine("장 종료 되었습니다.");
-					reserverOrderStockTimer.Stop();
-					return;
-				}
-
-				//시간외 거래가 가능한지 확인한다.
-				if (canBuyBeforeMarket)
-				{
-					//시간외 거래가 가능하면 리스트(1~n)개의 종목을 구매한다.
-					OrderEveryStock();
-					reserverOrderStockTimer.Stop();
-				}
-				else
-				{
-					//시간외 거래가 가능하지 않다면 0번째 종목을 구매해봐서 거래가 가능한지 확인한다.
-					checkCanBuyBeforeMarket();
-					Thread.Sleep(250);
-				}
-				*/
-
 				OrderEveryStock();
 				reserverOrderStockTimer.Stop();
 			}
@@ -95,24 +73,24 @@ namespace KOASampleCS
 
 		public void OrderEveryStock()
 		{
-			List<BuyStockData> buyStockDataList = CoreManager.Instance.requestManager.getBuyStockDataList();
+			List<StockData> stockDataList = CoreManager.Instance.requestManager.getStockDataList();
 
-			if (buyStockDataList.Count == 0)
+			if (stockDataList.Count == 0)
 				return;
-			
-			for (int i = 0; i < buyStockDataList.Count; i++)
+
+			for (int i = 0; i < stockDataList.Count; i++)
 			{
-				OrderStock(buyStockDataList[i], KOABiddingType.BEFORE_MARKET_EXTRA_TIME_CLOSING_PRICE);
+				OrderStock(stockDataList[i], KOABiddingType.BEFORE_MARKET_EXTRA_TIME_CLOSING_PRICE);
 				Thread.Sleep(250);
 			}
 		}
 
-		public void OrderStock(BuyStockData buyStockData, String orderType)
+		public void OrderStock(StockData stockData, String orderType)
 		{
-			String code = buyStockData.code;
-			int regularPrice = buyStockData.regularPrice;
-			int count = buyStockData.count;
-			bool isBuy = buyStockData.isBuy;
+			String code = stockData.code;
+			int regularPrice = stockData.regularPrice;
+			int count = stockData.count;
+			bool isBuy = stockData.isBuy;
 
 			if(isBuy == false)
 			{
@@ -143,8 +121,6 @@ namespace KOASampleCS
 				regularPrice = 0;
 			}
 
-			// =================================================
-			// 주식주문
 			int lRet = CoreManager.Instance.apiModule.SendOrder(
 						"주식주문",
 						ScreenUtil.GetScrNum(), 

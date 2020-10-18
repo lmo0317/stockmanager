@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Diagnostics;
 
 namespace KOASampleCS
 {
@@ -113,6 +114,28 @@ namespace KOASampleCS
 				);
 
 				stockItemGridView.Rows[i].Cells[getMenuIndex(AFTER_MARKET_CHANGE_RATE)].Style.ForeColor = stockItemInfo.afterMarketChangeRate > 0 ? Color.Red : Color.Blue;
+			}
+		}
+
+		private void addOrderReserveHandler(object sender, EventArgs e)
+		{
+			int index = CoreManager.Instance.conditionSearchManager.selectedConditionIndex;
+			List<StockItemInfo> stockItemList = CoreManager.Instance.conditionSearchManager.conditionList[index].stockItemList;
+			Debug.Write(stockItemList[stockItemGridView.CurrentCell.RowIndex].name);
+		}
+
+		private void stockItemGridView_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Right && e.ColumnIndex != -1)
+			{
+				ContextMenuStrip menu = new ContextMenuStrip();
+
+				menu.Items.Add("예약주문추가", null, new EventHandler(addOrderReserveHandler));
+
+				stockItemGridView.CurrentCell = stockItemGridView.Rows[e.RowIndex].Cells[e.ColumnIndex];
+
+				Point pt = stockItemGridView.PointToClient(Control.MousePosition);
+				menu.Show(stockItemGridView, pt.X, pt.Y);
 			}
 		}
 	}

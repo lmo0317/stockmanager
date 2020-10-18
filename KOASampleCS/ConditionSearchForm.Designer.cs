@@ -64,6 +64,7 @@
 			this.stockItemGridView.RowTemplate.Height = 30;
 			this.stockItemGridView.Size = new System.Drawing.Size(1622, 1070);
 			this.stockItemGridView.TabIndex = 2;
+			this.stockItemGridView.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.stockItemGridView_CellMouseClick);
 			// 
 			// ConditionSearchForm
 			// 

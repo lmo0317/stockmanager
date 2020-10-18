@@ -38,6 +38,7 @@
 			this.종료ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.조회기능ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.조건식ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.시간외주문ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.조건식조회ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.axKHOpenAPI = new AxKHOpenAPILib.AxKHOpenAPI();
 			this.tabControl1 = new System.Windows.Forms.TabControl();
@@ -52,7 +53,7 @@
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
 			this.label3 = new System.Windows.Forms.Label();
 			this.cbo계좌 = new System.Windows.Forms.ComboBox();
-			this.시간외주문ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.주문예약ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuStrip.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.axKHOpenAPI)).BeginInit();
 			this.tabControl1.SuspendLayout();
@@ -126,6 +127,8 @@
 			// 
 			// 조회기능ToolStripMenuItem
 			// 
+			this.조회기능ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.주문예약ToolStripMenuItem});
 			this.조회기능ToolStripMenuItem.Name = "조회기능ToolStripMenuItem";
 			this.조회기능ToolStripMenuItem.Size = new System.Drawing.Size(60, 29);
 			this.조회기능ToolStripMenuItem.Text = "주문";
@@ -139,11 +142,18 @@
 			this.조건식ToolStripMenuItem.Size = new System.Drawing.Size(60, 29);
 			this.조건식ToolStripMenuItem.Text = "조회";
 			// 
+			// 시간외주문ToolStripMenuItem
+			// 
+			this.시간외주문ToolStripMenuItem.Name = "시간외주문ToolStripMenuItem";
+			this.시간외주문ToolStripMenuItem.Size = new System.Drawing.Size(210, 30);
+			this.시간외주문ToolStripMenuItem.Text = "시간외 단일가";
+			this.시간외주문ToolStripMenuItem.Click += new System.EventHandler(this.시간외주문ToolStripMenuItem_Click_1);
+			// 
 			// 조건식조회ToolStripMenuItem
 			// 
 			this.조건식조회ToolStripMenuItem.Name = "조건식조회ToolStripMenuItem";
 			this.조건식조회ToolStripMenuItem.Size = new System.Drawing.Size(210, 30);
-			this.조건식조회ToolStripMenuItem.Text = "조건식조회";
+			this.조건식조회ToolStripMenuItem.Text = "조건식";
 			this.조건식조회ToolStripMenuItem.Click += new System.EventHandler(this.조건식조회ToolStripMenuItem_Click);
 			// 
 			// axKHOpenAPI
@@ -155,13 +165,13 @@
 			this.axKHOpenAPI.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("axKHOpenAPI.OcxState")));
 			this.axKHOpenAPI.Size = new System.Drawing.Size(96, 29);
 			this.axKHOpenAPI.TabIndex = 11;
-			this.axKHOpenAPI.OnEventConnect += new AxKHOpenAPILib._DKHOpenAPIEvents_OnEventConnectEventHandler(this.axKHOpenAPI_OnEventConnect);
 			this.axKHOpenAPI.OnReceiveTrData += new AxKHOpenAPILib._DKHOpenAPIEvents_OnReceiveTrDataEventHandler(this.axKHOpenAPI_OnReceiveTrData);
 			this.axKHOpenAPI.OnReceiveRealData += new AxKHOpenAPILib._DKHOpenAPIEvents_OnReceiveRealDataEventHandler(this.axKHOpenAPI_OnReceiveRealData);
 			this.axKHOpenAPI.OnReceiveMsg += new AxKHOpenAPILib._DKHOpenAPIEvents_OnReceiveMsgEventHandler(this.axKHOpenAPI_OnReceiveMsg);
 			this.axKHOpenAPI.OnReceiveChejanData += new AxKHOpenAPILib._DKHOpenAPIEvents_OnReceiveChejanDataEventHandler(this.axKHOpenAPI_OnReceiveChejanData);
-			this.axKHOpenAPI.OnReceiveConditionVer += new AxKHOpenAPILib._DKHOpenAPIEvents_OnReceiveConditionVerEventHandler(this.axKHOpenAPI_OnReceiveConditionVer);
+			this.axKHOpenAPI.OnEventConnect += new AxKHOpenAPILib._DKHOpenAPIEvents_OnEventConnectEventHandler(this.axKHOpenAPI_OnEventConnect);
 			this.axKHOpenAPI.OnReceiveTrCondition += new AxKHOpenAPILib._DKHOpenAPIEvents_OnReceiveTrConditionEventHandler(this.axKHOpenAPI_OnReceiveTrCondition);
+			this.axKHOpenAPI.OnReceiveConditionVer += new AxKHOpenAPILib._DKHOpenAPIEvents_OnReceiveConditionVerEventHandler(this.axKHOpenAPI_OnReceiveConditionVer);
 			// 
 			// tabControl1
 			// 
@@ -307,12 +317,11 @@
 			this.cbo계좌.TabIndex = 24;
 			this.cbo계좌.SelectedIndexChanged += new System.EventHandler(this.cbo계좌_SelectedIndexChanged);
 			// 
-			// 시간외주문ToolStripMenuItem
+			// 주문예약ToolStripMenuItem
 			// 
-			this.시간외주문ToolStripMenuItem.Name = "시간외주문ToolStripMenuItem";
-			this.시간외주문ToolStripMenuItem.Size = new System.Drawing.Size(210, 30);
-			this.시간외주문ToolStripMenuItem.Text = "시간외 단일가";
-			this.시간외주문ToolStripMenuItem.Click += new System.EventHandler(this.시간외주문ToolStripMenuItem_Click_1);
+			this.주문예약ToolStripMenuItem.Name = "주문예약ToolStripMenuItem";
+			this.주문예약ToolStripMenuItem.Size = new System.Drawing.Size(210, 30);
+			this.주문예약ToolStripMenuItem.Text = "예약 주문";
 			// 
 			// MainForm
 			// 
@@ -368,6 +377,7 @@
 		private System.Windows.Forms.ToolStripMenuItem 조건식ToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem 조건식조회ToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem 시간외주문ToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem 주문예약ToolStripMenuItem;
     }
 }
 

@@ -32,10 +32,10 @@ namespace KOASampleCS
 					lst일반.Items.Add(message);
 					lst일반.SelectedIndex = lst일반.Items.Count - 1;
 					break;
-				case Log.실시간:
-					lst실시간.Items.Add(message);
-					lst실시간.SelectedIndex = lst실시간.Items.Count - 1;
-					break;
+				//case Log.실시간:
+					//lst실시간.Items.Add(message);
+					//lst실시간.SelectedIndex = lst실시간.Items.Count - 1;
+					//break;
 				default:
 					break;
 			}

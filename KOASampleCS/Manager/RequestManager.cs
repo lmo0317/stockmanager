@@ -21,7 +21,7 @@ namespace KOASampleCS
 		const int TIME_OUT = 30 * 1000;
 		String urlForCookie = "https://finance.daum.net/domestic/after_hours?market=KOSPI";		
 
-		List<BuyStockData> buyStockDataList = new List<BuyStockData>();
+		List<StockData> stockDataList = new List<StockData>();
 		public RequestConditionData requestConditionData = new RequestConditionData();
 
 
@@ -41,14 +41,9 @@ namespace KOASampleCS
 			return "https://finance.daum.net/api/quotes/" + "A" + code + "?summary=false&changeStatistics=true";
 		}
 
-		public List<BuyStockData> getBuyStockDataList()
+		public List<StockData> getStockDataList()
 		{
-			return buyStockDataList;
-		}
-
-		public void updateBuySockDataList(int index, BuyStockData buyStockData)
-		{
-			buyStockDataList[index] = buyStockData;
+			return stockDataList;
 		}
 
 		private CookieCollection getCookies()
@@ -62,9 +57,9 @@ namespace KOASampleCS
 			}
 		}
 
-		public List<BuyStockData> requestAfterHourSpac()
+		public List<StockData> requestAfterMarketStockList()
 		{
-			buyStockDataList.Clear();
+			stockDataList.Clear();
 			CookieCollection cookies = getCookies();
 
 			for(int i=0;i<marketList.Length; i++)
@@ -83,15 +78,15 @@ namespace KOASampleCS
 						String responseText = sr.ReadToEnd();
 						JObject obj = JObject.Parse(responseText);
 						JArray stocks = JArray.Parse(obj["data"].ToString());
-						AddBuyStockDataList(stocks);						
+						AddStockDataList(stocks);
 					}
 				}
 			}
-			buyStockDataList.Sort(compare);
-			return buyStockDataList;
+			stockDataList.Sort(compare);
+			return stockDataList;
 		}
 
-        public int compare(BuyStockData left, BuyStockData right)
+        public int compare(StockData left, StockData right)
         {
 			return (int)(left.afterMarketChangeRate * 10000) - (int)(right.afterMarketChangeRate * 10000);
         }
@@ -123,7 +118,7 @@ namespace KOASampleCS
 			return true;
 		}
 
-		private void AddBuyStockDataList(JArray stocks)
+		private void AddStockDataList(JArray stocks)
 		{
 			for (int i = 0; i < stocks.Count; i++)
 			{
@@ -189,33 +184,33 @@ namespace KOASampleCS
 				if (requestConditionData.exceptionStockStateList.Contains(stockState))
 					continue;
 
-				BuyStockData buyStockData = new BuyStockData();
-				buyStockData.code = code;
-				buyStockData.name = name;
-				buyStockData.count = count;
-				buyStockData.stockState = stockState;
-				buyStockData.isBuy = Config.DEFAULT_ORDER_CHECK;
-				buyStockData.totalPrcie = regularPrice * count;
+				StockData stockData = new StockData();
+				stockData.code = code;
+				stockData.name = name;
+				stockData.count = count;
+				stockData.stockState = stockState;
+				stockData.isBuy = Config.DEFAULT_ORDER_CHECK;
+				stockData.totalPrcie = regularPrice * count;
 
-				buyStockData.regularChangeRate = regularChangeRate;
-				buyStockData.regularVolume = regularVolume;
-				buyStockData.regularPrice = regularPrice;
-				buyStockData.regularOpeningPrice = regularOpeningPrice;
-				buyStockData.regularOpeningChangeRate = (float)(regularOpeningPrice - beforeDayPrice) / beforeDayPrice;
+				stockData.regularChangeRate = regularChangeRate;
+				stockData.regularVolume = regularVolume;
+				stockData.regularPrice = regularPrice;
+				stockData.regularOpeningPrice = regularOpeningPrice;
+				stockData.regularOpeningChangeRate = (float)(regularOpeningPrice - beforeDayPrice) / beforeDayPrice;
 
-				buyStockData.afterMarketChangeRate = afterMarketChangeRate;
-				buyStockData.afterMarketVolume = afterMarketVolume;
-				buyStockData.afterMarketPrice = afterMarketPrice;
-				buyStockData.afterMarketTradingValue = afterMarketTradingValue;
+				stockData.afterMarketChangeRate = afterMarketChangeRate;
+				stockData.afterMarketVolume = afterMarketVolume;
+				stockData.afterMarketPrice = afterMarketPrice;
+				stockData.afterMarketTradingValue = afterMarketTradingValue;
 
-				buyStockData.beforeDayChangeRate = beforeDayChangeRate;
-				buyStockData.beforeDayVolume = beforeDayVolume;
-				buyStockData.beforeDayPrice = beforeDayPrice;
+				stockData.beforeDayChangeRate = beforeDayChangeRate;
+				stockData.beforeDayVolume = beforeDayVolume;
+				stockData.beforeDayPrice = beforeDayPrice;
 
-				buyStockData.foreignPurchaseVolume = foreignPurchaseVolume;
-				buyStockData.institutionPurchaseVolume = institutionPurchaseVolume;
-					
-				buyStockDataList.Add(buyStockData);
+				stockData.foreignPurchaseVolume = foreignPurchaseVolume;
+				stockData.institutionPurchaseVolume = institutionPurchaseVolume;
+
+				stockDataList.Add(stockData);
 			}
 		}
 
