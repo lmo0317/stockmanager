@@ -32,10 +32,12 @@
 			this.dateTimePicker = new System.Windows.Forms.DateTimePicker();
 			this.reserveCheckBox = new System.Windows.Forms.CheckBox();
 			this.label1 = new System.Windows.Forms.Label();
-			this.buyBeforeHoursClosing = new System.Windows.Forms.Button();
-			this.dataGridView1 = new System.Windows.Forms.DataGridView();
+			this.btnBuy = new System.Windows.Forms.Button();
+			this.reserveStockDataGridView = new System.Windows.Forms.DataGridView();
+			this.btnUpdate = new System.Windows.Forms.Button();
+			this.btnSave = new System.Windows.Forms.Button();
 			this.groupBox2.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.reserveStockDataGridView)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// groupBox2
@@ -84,39 +86,67 @@
 			this.label1.TabIndex = 28;
 			this.label1.Text = "시간 : ";
 			// 
-			// buyBeforeHoursClosing
+			// btnBuy
 			// 
-			this.buyBeforeHoursClosing.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.buyBeforeHoursClosing.Location = new System.Drawing.Point(13, 949);
-			this.buyBeforeHoursClosing.Margin = new System.Windows.Forms.Padding(4);
-			this.buyBeforeHoursClosing.Name = "buyBeforeHoursClosing";
-			this.buyBeforeHoursClosing.Size = new System.Drawing.Size(314, 45);
-			this.buyBeforeHoursClosing.TabIndex = 30;
-			this.buyBeforeHoursClosing.Text = "전체 주문";
-			this.buyBeforeHoursClosing.UseVisualStyleBackColor = true;
+			this.btnBuy.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.btnBuy.Location = new System.Drawing.Point(13, 949);
+			this.btnBuy.Margin = new System.Windows.Forms.Padding(4);
+			this.btnBuy.Name = "btnBuy";
+			this.btnBuy.Size = new System.Drawing.Size(314, 45);
+			this.btnBuy.TabIndex = 30;
+			this.btnBuy.Text = "전체 주문";
+			this.btnBuy.UseVisualStyleBackColor = true;
+			this.btnBuy.Click += new System.EventHandler(this.btnBuy_Click);
 			// 
-			// dataGridView1
+			// reserveStockDataGridView
 			// 
-			this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-			this.dataGridView1.Location = new System.Drawing.Point(13, 13);
-			this.dataGridView1.Name = "dataGridView1";
-			this.dataGridView1.RowTemplate.Height = 30;
-			this.dataGridView1.Size = new System.Drawing.Size(1225, 804);
-			this.dataGridView1.TabIndex = 32;
+			this.reserveStockDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+			this.reserveStockDataGridView.Location = new System.Drawing.Point(13, 13);
+			this.reserveStockDataGridView.Name = "reserveStockDataGridView";
+			this.reserveStockDataGridView.RowTemplate.Height = 30;
+			this.reserveStockDataGridView.Size = new System.Drawing.Size(1225, 804);
+			this.reserveStockDataGridView.TabIndex = 32;
+			this.reserveStockDataGridView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.reserveStockDataGridView_CellValueChanged);
+			// 
+			// btnUpdate
+			// 
+			this.btnUpdate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.btnUpdate.Location = new System.Drawing.Point(335, 949);
+			this.btnUpdate.Margin = new System.Windows.Forms.Padding(4);
+			this.btnUpdate.Name = "btnUpdate";
+			this.btnUpdate.Size = new System.Drawing.Size(314, 45);
+			this.btnUpdate.TabIndex = 33;
+			this.btnUpdate.Text = "갱신";
+			this.btnUpdate.UseVisualStyleBackColor = true;
+			this.btnUpdate.Click += new System.EventHandler(this.btnUpdate_Click);
+			// 
+			// btnSave
+			// 
+			this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.btnSave.Location = new System.Drawing.Point(657, 949);
+			this.btnSave.Margin = new System.Windows.Forms.Padding(4);
+			this.btnSave.Name = "btnSave";
+			this.btnSave.Size = new System.Drawing.Size(314, 45);
+			this.btnSave.TabIndex = 34;
+			this.btnSave.Text = "저장";
+			this.btnSave.UseVisualStyleBackColor = true;
+			this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
 			// 
 			// ReserveStockTradingForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 18F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(1262, 1007);
-			this.Controls.Add(this.dataGridView1);
+			this.Controls.Add(this.btnSave);
+			this.Controls.Add(this.btnUpdate);
+			this.Controls.Add(this.reserveStockDataGridView);
 			this.Controls.Add(this.groupBox2);
-			this.Controls.Add(this.buyBeforeHoursClosing);
+			this.Controls.Add(this.btnBuy);
 			this.Name = "ReserveStockTradingForm";
 			this.Text = "ReserveStockTradingForm";
 			this.groupBox2.ResumeLayout(false);
 			this.groupBox2.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.reserveStockDataGridView)).EndInit();
 			this.ResumeLayout(false);
 
 		}
@@ -127,7 +157,9 @@
 		private System.Windows.Forms.DateTimePicker dateTimePicker;
 		private System.Windows.Forms.CheckBox reserveCheckBox;
 		private System.Windows.Forms.Label label1;
-		private System.Windows.Forms.Button buyBeforeHoursClosing;
-		private System.Windows.Forms.DataGridView dataGridView1;
+		private System.Windows.Forms.Button btnBuy;
+		private System.Windows.Forms.DataGridView reserveStockDataGridView;
+		private System.Windows.Forms.Button btnUpdate;
+		private System.Windows.Forms.Button btnSave;
 	}
 }

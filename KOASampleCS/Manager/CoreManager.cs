@@ -72,6 +72,15 @@ namespace KOASampleCS
 			}
 		}
 
+		private ReserveStockManager _reserveStockManager = null;
+		public ReserveStockManager reserveStockManager
+		{
+			get
+			{
+				return _reserveStockManager;
+			}
+		}
+
 		private CoreManager()
 		{
 			_requestManager = new RequestManager();
@@ -81,6 +90,7 @@ namespace KOASampleCS
 			_receiveManager = new ReceiveManager();
 			_conditionSearchManager = new ConditionSearchManager();
 			_formManager = new FormManager();
+			_reserveStockManager = new ReserveStockManager();
 		}
 
 		private static CoreManager _instance = null;

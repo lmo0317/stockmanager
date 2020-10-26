@@ -45,6 +45,8 @@ namespace KOASampleCS
 				string _code = CoreManager.Instance.apiModule.GetCommData(e.sTrCode, e.sRQName, i, "종목코드").Trim();
 				string _name = CoreManager.Instance.apiModule.GetCommData(e.sTrCode, e.sRQName, i, "종목명").Trim();
 				string _price = CoreManager.Instance.apiModule.GetCommData(e.sTrCode, e.sRQName, i, "현재가").Trim();
+				_price = StringUtil.GetRegularString(_price);
+
 				string _chagnePrice = CoreManager.Instance.apiModule.GetCommData(e.sTrCode, e.sRQName, i, "전일대비").Trim();
 				string _chagneRate = CoreManager.Instance.apiModule.GetCommData(e.sTrCode, e.sRQName, i, "등락율").Trim();
 				string _volume = CoreManager.Instance.apiModule.GetCommData(e.sTrCode, e.sRQName, i, "거래량").Trim();
@@ -52,7 +54,7 @@ namespace KOASampleCS
 				string _highPrice = CoreManager.Instance.apiModule.GetCommData(e.sTrCode, e.sRQName, i, "고가").Trim();
 				string _lowPrice = CoreManager.Instance.apiModule.GetCommData(e.sTrCode, e.sRQName, i, "저가").Trim();
 
-				StockItemInfo stockItemInfo = new StockItemInfo()
+				ConditionStockData stockItemInfo = new ConditionStockData()
 				{
 					code = _code,
 					name = _name,
@@ -73,7 +75,7 @@ namespace KOASampleCS
 			RequestAftermarketTrading(null);
 		}
 
-		public int compare(StockItemInfo left, StockItemInfo right)
+		public int compare(ConditionStockData left, ConditionStockData right)
 		{
 			return (int)(right.afterMarketChangeRate * 10000) - (int)(left.afterMarketChangeRate * 10000);
 		}
@@ -100,7 +102,7 @@ namespace KOASampleCS
 				return;
 			}
 
-			StockItemInfo stockItemInfo = conditionList[selectedConditionIndex].stockItemList[currentStockIndex];
+			ConditionStockData stockItemInfo = conditionList[selectedConditionIndex].stockItemList[currentStockIndex];
 			CoreManager.Instance.apiModule.SetInputValue("종목코드", stockItemInfo.code);
 			CoreManager.Instance.apiModule.CommRqData("시간외단일가요청", "opt10087", 0, ScreenUtil.GetScrNum());
 			Thread.Sleep(350);

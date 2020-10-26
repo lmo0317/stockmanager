@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace KOASampleCS
 {
-	class StockData
+	class AfterMarketStockData
 	{
-		public StockData()
+		public AfterMarketStockData()
 		{
 			foreignPurchaseVolume = 0;
 			institutionPurchaseVolume = 0;
@@ -22,12 +22,6 @@ namespace KOASampleCS
 		public String code;
 		public String name;
 		public String stockState;
-
-		//구매 수량
-		public int count;
-
-		//전체 구매 가격
-		public int totalPrcie;
 		
 		//전일
 		public float beforeDayChangeRate;

@@ -11,91 +11,33 @@ namespace KOASampleCS
 {
 	class OrderManager
 	{
-		private System.Windows.Forms.Timer reserverOrderStockTimer;
-		private DateTime reserveTime;
-		private bool isCloseMarket = false;
-		private bool canBuyBeforeMarket = false;
-		List<StockData> reserveStockDataList = new List<StockData>();
-
 		public void OnReceiveMsg(AxKHOpenAPILib._DKHOpenAPIEvents_OnReceiveMsgEvent e)
 		{
-			//[505217] 장종료되었습니다.
-			//[505182] 장개시전입니다.
-			//[571566] 주문불가능한종목입니다.
-			//[107179] 장개시전 시간외 매수주문이 완료되었습니다.
-			//[571489] 장이 열리지않는 날입니다.
-			if (e.sRQName == "주식주문")
-			{
-				if (e.sMsg.Contains("107179"))
-				{
-					canBuyBeforeMarket = true;
-				}
-				else if (e.sMsg.Contains("505217") || e.sMsg.Contains("571489"))
-				{
-					isCloseMarket = true;
-				}
-			}
+			
 		}
 
 		public OrderManager()
 		{
-			reserverOrderStockTimer = new System.Windows.Forms.Timer();
-			reserverOrderStockTimer.Interval = 200;
-			reserverOrderStockTimer.Tick += new EventHandler(reserveOrderStockHandler);
-			reserveTime = new DateTime();
+
 		}
 
-		public void reserveOrderStock(bool isStart, DateTime time)
+		public void OrderEveryStock(List<BuyStockData> buyStockDataList)
 		{
-			if (isStart)
-			{
-				reserveTime = time;
-				reserverOrderStockTimer.Start();
-			}
-			else
-			{
-				reserverOrderStockTimer.Stop();
-			}
-		}
-
-		void reserveOrderStockHandler(object sender, EventArgs e)
-		{
-			TimeSpan spanTime = DateTime.Now.Subtract(reserveTime);
-			if(spanTime.TotalSeconds >= 0)
-			{
-				if (CoreManager.Instance.accountManager.credit == null)
-					return;
-
-				OrderEveryStock();
-				reserverOrderStockTimer.Stop();
-			}
-		}
-
-		public void OrderEveryStock()
-		{
-			List<StockData> stockDataList = CoreManager.Instance.requestManager.getStockDataList();
-
-			if (stockDataList.Count == 0)
+			if (buyStockDataList.Count == 0)
 				return;
 
-			for (int i = 0; i < stockDataList.Count; i++)
+			for (int i = 0; i < buyStockDataList.Count; i++)
 			{
-				OrderStock(stockDataList[i], KOABiddingType.BEFORE_MARKET_EXTRA_TIME_CLOSING_PRICE);
+				OrderStock(buyStockDataList[i], KOABiddingType.BEFORE_MARKET_EXTRA_TIME_CLOSING_PRICE);
 				Thread.Sleep(250);
 			}
 		}
 
-		public void OrderStock(StockData stockData, String orderType)
+		public void OrderStock(BuyStockData buyStockData, String orderType)
 		{
-			String code = stockData.code;
-			int regularPrice = stockData.regularPrice;
-			int count = stockData.count;
-			bool isBuy = stockData.isBuy;
-
-			if(isBuy == false)
-			{
-				return;
-			}
+			String code = buyStockData.code;
+			int regularPrice = buyStockData.price;
+			int count = buyStockData.count;
 
 			if (CoreManager.Instance.accountManager.credit == null || CoreManager.Instance.accountManager.credit.Length != 10)
 			{
@@ -136,7 +78,7 @@ namespace KOASampleCS
 
 			if (lRet == 0)
 			{
-				LoggerUtil.Logger(Log.일반, "주문이 전송 되었습니다");
+				LoggerUtil.Logger(Log.일반, "주문이 전송 되었습니다 - " + buyStockData.name);
 			}
 			else
 			{

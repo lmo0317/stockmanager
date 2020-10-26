@@ -28,19 +28,50 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
+			this.dataGridView1 = new System.Windows.Forms.DataGridView();
+			this.groupBox1 = new System.Windows.Forms.GroupBox();
+			((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+			this.groupBox1.SuspendLayout();
 			this.SuspendLayout();
+			// 
+			// dataGridView1
+			// 
+			this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+			this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.dataGridView1.Location = new System.Drawing.Point(3, 24);
+			this.dataGridView1.Name = "dataGridView1";
+			this.dataGridView1.RowTemplate.Height = 30;
+			this.dataGridView1.Size = new System.Drawing.Size(843, 878);
+			this.dataGridView1.TabIndex = 0;
+			// 
+			// groupBox1
+			// 
+			this.groupBox1.Controls.Add(this.dataGridView1);
+			this.groupBox1.Location = new System.Drawing.Point(13, 13);
+			this.groupBox1.Name = "groupBox1";
+			this.groupBox1.Size = new System.Drawing.Size(849, 905);
+			this.groupBox1.TabIndex = 1;
+			this.groupBox1.TabStop = false;
+			this.groupBox1.Text = "groupBox1";
+			this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
 			// 
 			// BuyStockForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 18F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(703, 999);
+			this.ClientSize = new System.Drawing.Size(874, 1161);
+			this.Controls.Add(this.groupBox1);
 			this.Name = "BuyStockForm";
 			this.Text = "BuyStockForm";
+			((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+			this.groupBox1.ResumeLayout(false);
 			this.ResumeLayout(false);
 
 		}
 
 		#endregion
+
+		private System.Windows.Forms.DataGridView dataGridView1;
+		private System.Windows.Forms.GroupBox groupBox1;
 	}
 }

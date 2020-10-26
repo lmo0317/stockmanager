@@ -80,7 +80,7 @@ namespace KOASampleCS
 					if(result > 0)
 					{
 						Console.WriteLine("조건검색 성공");
-						CoreManager.Instance.conditionSearchManager.conditionList[index].stockItemList = new List<StockItemInfo>();
+						CoreManager.Instance.conditionSearchManager.conditionList[index].stockItemList = new List<ConditionStockData>();
 					}
 					else
 					{
@@ -94,12 +94,12 @@ namespace KOASampleCS
 		public void updateStockItemGridView()
 		{
 			int index = CoreManager.Instance.conditionSearchManager.selectedConditionIndex;
-			List<StockItemInfo> stockItemList = CoreManager.Instance.conditionSearchManager.conditionList[index].stockItemList;
+			List<ConditionStockData> stockItemList = CoreManager.Instance.conditionSearchManager.conditionList[index].stockItemList;
 
 			stockItemGridView.Rows.Clear();
 			for (int i = 0; i < stockItemList.Count; i++)
 			{
-				StockItemInfo stockItemInfo = stockItemList[i];
+				ConditionStockData stockItemInfo = stockItemList[i];
 				stockItemGridView.Rows.Add(
 					stockItemInfo.name,
 					stockItemInfo.price,
@@ -120,8 +120,15 @@ namespace KOASampleCS
 		private void addOrderReserveHandler(object sender, EventArgs e)
 		{
 			int index = CoreManager.Instance.conditionSearchManager.selectedConditionIndex;
-			List<StockItemInfo> stockItemList = CoreManager.Instance.conditionSearchManager.conditionList[index].stockItemList;
-			Debug.Write(stockItemList[stockItemGridView.CurrentCell.RowIndex].name);
+			List<ConditionStockData> stockItemList = CoreManager.Instance.conditionSearchManager.conditionList[index].stockItemList;
+			ConditionStockData conditionStockData = stockItemList[stockItemGridView.CurrentCell.RowIndex];
+
+			BuyStockData buyStockData = new BuyStockData();
+			buyStockData.code = conditionStockData.code;
+			buyStockData.name = conditionStockData.name;
+			buyStockData.price = Int32.Parse(conditionStockData.price);
+			CoreManager.Instance.reserveStockManager.addReserveStockData(buyStockData);
+			//Debug.Write(stockItemList[stockItemGridView.CurrentCell.RowIndex].name);
 		}
 
 		private void stockItemGridView_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
@@ -129,11 +136,8 @@ namespace KOASampleCS
 			if (e.Button == MouseButtons.Right && e.ColumnIndex != -1)
 			{
 				ContextMenuStrip menu = new ContextMenuStrip();
-
 				menu.Items.Add("예약주문추가", null, new EventHandler(addOrderReserveHandler));
-
 				stockItemGridView.CurrentCell = stockItemGridView.Rows[e.RowIndex].Cells[e.ColumnIndex];
-
 				Point pt = stockItemGridView.PointToClient(Control.MousePosition);
 				menu.Show(stockItemGridView, pt.X, pt.Y);
 			}

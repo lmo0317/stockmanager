@@ -21,7 +21,7 @@ namespace KOASampleCS
 		const int TIME_OUT = 30 * 1000;
 		String urlForCookie = "https://finance.daum.net/domestic/after_hours?market=KOSPI";		
 
-		List<StockData> stockDataList = new List<StockData>();
+		List<AfterMarketStockData> stockDataList = new List<AfterMarketStockData>();
 		public RequestConditionData requestConditionData = new RequestConditionData();
 
 
@@ -41,7 +41,7 @@ namespace KOASampleCS
 			return "https://finance.daum.net/api/quotes/" + "A" + code + "?summary=false&changeStatistics=true";
 		}
 
-		public List<StockData> getStockDataList()
+		public List<AfterMarketStockData> getStockDataList()
 		{
 			return stockDataList;
 		}
@@ -57,7 +57,7 @@ namespace KOASampleCS
 			}
 		}
 
-		public List<StockData> requestAfterMarketStockList()
+		public List<AfterMarketStockData> requestAfterMarketStockList()
 		{
 			stockDataList.Clear();
 			CookieCollection cookies = getCookies();
@@ -86,7 +86,7 @@ namespace KOASampleCS
 			return stockDataList;
 		}
 
-        public int compare(StockData left, StockData right)
+        public int compare(AfterMarketStockData left, AfterMarketStockData right)
         {
 			return (int)(left.afterMarketChangeRate * 10000) - (int)(right.afterMarketChangeRate * 10000);
         }
@@ -184,13 +184,11 @@ namespace KOASampleCS
 				if (requestConditionData.exceptionStockStateList.Contains(stockState))
 					continue;
 
-				StockData stockData = new StockData();
+				AfterMarketStockData stockData = new AfterMarketStockData();
 				stockData.code = code;
 				stockData.name = name;
-				stockData.count = count;
 				stockData.stockState = stockState;
 				stockData.isBuy = Config.DEFAULT_ORDER_CHECK;
-				stockData.totalPrcie = regularPrice * count;
 
 				stockData.regularChangeRate = regularChangeRate;
 				stockData.regularVolume = regularVolume;

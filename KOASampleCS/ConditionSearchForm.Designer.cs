@@ -51,7 +51,7 @@
 			this.conditionGridView.Location = new System.Drawing.Point(13, 62);
 			this.conditionGridView.Name = "conditionGridView";
 			this.conditionGridView.RowTemplate.Height = 30;
-			this.conditionGridView.Size = new System.Drawing.Size(306, 1070);
+			this.conditionGridView.Size = new System.Drawing.Size(385, 1070);
 			this.conditionGridView.TabIndex = 1;
 			this.conditionGridView.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.conditionGridView_RowEnter);
 			this.conditionGridView.SelectionChanged += new System.EventHandler(this.conditionGridView_SelectionChanged);
@@ -59,10 +59,10 @@
 			// stockItemGridView
 			// 
 			this.stockItemGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-			this.stockItemGridView.Location = new System.Drawing.Point(325, 62);
+			this.stockItemGridView.Location = new System.Drawing.Point(420, 62);
 			this.stockItemGridView.Name = "stockItemGridView";
 			this.stockItemGridView.RowTemplate.Height = 30;
-			this.stockItemGridView.Size = new System.Drawing.Size(1622, 1070);
+			this.stockItemGridView.Size = new System.Drawing.Size(1527, 1070);
 			this.stockItemGridView.TabIndex = 2;
 			this.stockItemGridView.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.stockItemGridView_CellMouseClick);
 			// 

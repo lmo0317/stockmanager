@@ -12,6 +12,6 @@ namespace KOASampleCS
 		public string name { get; set; }
 		public bool registered = false;
 
-		public List<StockItemInfo> stockItemList;
+		public List<ConditionStockData> stockItemList;
 	}
 }

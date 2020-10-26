@@ -37,6 +37,7 @@
 			this.계좌조회ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.종료ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.조회기능ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.주문예약ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.조건식ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.시간외주문ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.조건식조회ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -53,7 +54,6 @@
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
 			this.label3 = new System.Windows.Forms.Label();
 			this.cbo계좌 = new System.Windows.Forms.ComboBox();
-			this.주문예약ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuStrip.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.axKHOpenAPI)).BeginInit();
 			this.tabControl1.SuspendLayout();
@@ -132,6 +132,13 @@
 			this.조회기능ToolStripMenuItem.Name = "조회기능ToolStripMenuItem";
 			this.조회기능ToolStripMenuItem.Size = new System.Drawing.Size(60, 29);
 			this.조회기능ToolStripMenuItem.Text = "주문";
+			// 
+			// 주문예약ToolStripMenuItem
+			// 
+			this.주문예약ToolStripMenuItem.Name = "주문예약ToolStripMenuItem";
+			this.주문예약ToolStripMenuItem.Size = new System.Drawing.Size(210, 30);
+			this.주문예약ToolStripMenuItem.Text = "예약 주문";
+			this.주문예약ToolStripMenuItem.Click += new System.EventHandler(this.주문예약ToolStripMenuItem_Click);
 			// 
 			// 조건식ToolStripMenuItem
 			// 
@@ -316,12 +323,6 @@
 			this.cbo계좌.Size = new System.Drawing.Size(171, 26);
 			this.cbo계좌.TabIndex = 24;
 			this.cbo계좌.SelectedIndexChanged += new System.EventHandler(this.cbo계좌_SelectedIndexChanged);
-			// 
-			// 주문예약ToolStripMenuItem
-			// 
-			this.주문예약ToolStripMenuItem.Name = "주문예약ToolStripMenuItem";
-			this.주문예약ToolStripMenuItem.Size = new System.Drawing.Size(210, 30);
-			this.주문예약ToolStripMenuItem.Text = "예약 주문";
 			// 
 			// MainForm
 			// 

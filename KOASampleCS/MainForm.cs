@@ -51,11 +51,10 @@ namespace KOASampleCS
 			LoggerUtil.lst일반 = lst일반;
 			CoreManager.Instance.moduleManager.openApiModule = axKHOpenAPI;
 
-			//if (Config.isAutoStart)
-			//{
-			//	axKHOpenAPI.CommConnect();
-			//	시간외주문ToolStripMenuItem_Click(null, null);
-			//}
+			if (Config.isAutoStart)
+			{
+				axKHOpenAPI.CommConnect();
+			}
 		}
 
         // 로그를 출력합니다.
@@ -174,6 +173,12 @@ namespace KOASampleCS
 		{
 			AfterMarketStockListForm afterMarketStockListForm = new AfterMarketStockListForm();
 			afterMarketStockListForm.Show();
+		}
+
+		private void 주문예약ToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			ReserveStockTradingForm reserveStockTradingForm = new ReserveStockTradingForm();
+			reserveStockTradingForm.Show();
 		}
     }
 }

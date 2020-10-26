@@ -27,10 +27,6 @@ namespace KOASampleCS
 		public static String AFTER_MARKET_CHANGE_RATE = "시간외대비율";
 		public static String AFTER_MARKET_VOLUME = "시간외체결량";
 		public static String AFTER_MARKET_TRADING_VALUE = "시간외거래대금";
-		
-		public static String BEFORE_DAY_PRICE = "전일가격";
-		public static String BEFORE_DAY_CHANGE_RATE = "전일대비율";
-		public static String BEFORE_DAY_VOLUME = "전일체결량";
 
 		public static String REGULAR_OPENING_PRICE = "시가";
 		public static String REGULAR_OPENING_CHANGE_RATE = "시가대비율";
@@ -43,7 +39,6 @@ namespace KOASampleCS
 
 		private string[] menus = { CODE, NAME, STOCK_STATE,
 										AFTER_MARKET_PRICE, AFTER_MARKET_CHANGE_RATE, AFTER_MARKET_VOLUME, AFTER_MARKET_TRADING_VALUE,
-										BEFORE_DAY_PRICE, BEFORE_DAY_CHANGE_RATE, BEFORE_DAY_VOLUME,
 										REGULAR_OPENING_PRICE, REGULAR_OPENING_CHANGE_RATE, REGULAR_PRICE, REGULAR_CHANGE_RATE, REGULAR_VOLUME };
 
 		private void makeStockStateMap()
@@ -70,8 +65,6 @@ namespace KOASampleCS
 		private void Init()
 		{
 			makeStockDataGridView();
-			makeStockDataGridViewDetail(false);
-			checkBoxDetail.Checked = false;
 		}
 
 		private void makeStockDataGridView()
@@ -83,7 +76,7 @@ namespace KOASampleCS
 			stockDataGridView.Columns[getMenuIndex(AFTER_MARKET_TRADING_VALUE)].Width = 120;
 		}
 
-		private void stockListAddToDataGridView(List<StockData> stockDataList)
+		private void stockListAddToDataGridView(List<AfterMarketStockData> stockDataList)
 		{
 			stockDataGridView.Rows.Clear();
 
@@ -93,8 +86,6 @@ namespace KOASampleCS
 				String name = stockDataList[i].name;
 				String stockState = stockDataList[i].stockState;
 				stockState = mapStockStateCodeToString.ContainsKey(stockState) ? mapStockStateCodeToString[stockState] : "";
-				String count = stockDataList[i].count.ToString();
-				String totalPrcie = stockDataList[i].totalPrcie.ToString("#,###");
 
 				String regularOpeningPrice = stockDataList[i].regularOpeningPrice.ToString("#,###");
 				String regularOpeningChangeRate = (stockDataList[i].regularOpeningChangeRate * 100).ToString("0.00");
@@ -119,11 +110,9 @@ namespace KOASampleCS
 				if (institutionPurchaseVolume == "") institutionPurchaseVolume = "0";
 
 				stockDataGridView.Rows.Add(code, name, stockState,
-												afterMarketPrice, afterMarketChangeRate, afterMarketVolume, afterMarketTradingValue, 
-												beforeDayPrice, beforeDayChangeRate, beforeDayVolume,
+												afterMarketPrice, afterMarketChangeRate, afterMarketVolume, afterMarketTradingValue,
 												regularOpeningPrice, regularOpeningChangeRate, regularPrice, regularChangeRate, regularVolume);
 
-				stockDataGridView.Rows[i].Cells[getMenuIndex(BEFORE_DAY_CHANGE_RATE)].Style.ForeColor = stockDataList[i].beforeDayChangeRate > 0 ? Color.Red : Color.Blue;
 				stockDataGridView.Rows[i].Cells[getMenuIndex(REGULAR_OPENING_CHANGE_RATE)].Style.ForeColor = stockDataList[i].regularOpeningChangeRate > 0 ? Color.Red : Color.Blue;
 				stockDataGridView.Rows[i].Cells[getMenuIndex(REGULAR_CHANGE_RATE)].Style.ForeColor = stockDataList[i].regularChangeRate > 0 ? Color.Red : Color.Blue;
 				stockDataGridView.Rows[i].Cells[getMenuIndex(AFTER_MARKET_CHANGE_RATE)].Style.ForeColor = stockDataList[i].afterMarketChangeRate > 0 ? Color.Red : Color.Blue;
@@ -134,13 +123,13 @@ namespace KOASampleCS
 
 		private void getListForBuy_Click(object sender, EventArgs e)
 		{
-			List<StockData> stockDataList = CoreManager.Instance.requestManager.requestAfterMarketStockList();
+			List<AfterMarketStockData> stockDataList = CoreManager.Instance.requestManager.requestAfterMarketStockList();
 			stockListAddToDataGridView(stockDataList);
 		}
 
 		private void buyBeforeHoursClosing_Click(object sender, EventArgs e)
 		{
-			CoreManager.Instance.orderManager.OrderEveryStock();
+			//CoreManager.Instance.orderManager.OrderEveryStock();
 		}
 
 		private void updateStockDataByCell(DataGridViewCellEventArgs e)
@@ -188,34 +177,34 @@ namespace KOASampleCS
 			updateStockDataByCell(e);
 		}
 
-		private void checkBoxDetail_CheckedChanged(object sender, EventArgs e)
-		{
-			bool isChcked = checkBoxDetail.Checked;
-			makeStockDataGridViewDetail(isChcked);
-		}
-
 		private void showConditionForm_Click(object sender, EventArgs e)
 		{
 			AfterMarketStockListConditionForm afterMarketStockListConditionForm = new AfterMarketStockListConditionForm();
 			afterMarketStockListConditionForm.Show();
 		}
 
-		private void makeStockDataGridViewDetail(bool isDetail)
+		private void stockDataGridView_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
 		{
-			if (isDetail)
+			if (e.Button == MouseButtons.Right && e.ColumnIndex != -1)
 			{
-				for (int i = 1; i < menus.Length; i++)
-				{
-					stockDataGridView.Columns[i].Visible = true;
-				}
+				ContextMenuStrip menu = new ContextMenuStrip();
+				menu.Items.Add("예약주문추가", null, new EventHandler(addOrderReserveHandler));
+				stockDataGridView.CurrentCell = stockDataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex];
+				Point pt = stockDataGridView.PointToClient(Control.MousePosition);
+				menu.Show(stockDataGridView, pt.X, pt.Y);
 			}
-			else
-			{
-				stockDataGridView.Columns[getMenuIndex(CODE)].Visible = false;
-				stockDataGridView.Columns[getMenuIndex(BEFORE_DAY_PRICE)].Visible = false;
-				stockDataGridView.Columns[getMenuIndex(BEFORE_DAY_CHANGE_RATE)].Visible = false;
-				stockDataGridView.Columns[getMenuIndex(BEFORE_DAY_VOLUME)].Visible = false;
-			}
+		}
+
+		private void addOrderReserveHandler(object sender, EventArgs e)
+		{
+			int index = CoreManager.Instance.conditionSearchManager.selectedConditionIndex;
+
+			AfterMarketStockData stockData = CoreManager.Instance.requestManager.getStockDataList()[stockDataGridView.CurrentCell.RowIndex];
+			BuyStockData buyStockData = new BuyStockData();
+			buyStockData.code = stockData.code;
+			buyStockData.name = stockData.name;
+			buyStockData.price = stockData.beforeDayPrice;
+			CoreManager.Instance.reserveStockManager.addReserveStockData(buyStockData);
 		}
 	}
 }

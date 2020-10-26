@@ -16,11 +16,11 @@ namespace KOASampleCS
         {
 			if (args.Length > 0)
 			{
-				//Console.WriteLine("autostart");
-				//if (args[0] == "autostart")
-				//{
-				//	Config.isAutoStart = true;
-				//}
+				Console.WriteLine("autostart");
+				if (args[0] == "autostart")
+				{
+					Config.isAutoStart = true;
+				}
 			}
 
             Application.EnableVisualStyles();

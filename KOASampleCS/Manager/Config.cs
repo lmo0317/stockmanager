@@ -11,7 +11,7 @@ namespace KOASampleCS
 		//주문 시간
 		public static int ORDER_TIME_HOUR = 8;
 		public static int ORDER_TIME_MINUTE = 29;
-		public static int ORDER_TIME_SECOND = 58;
+		public static int ORDER_TIME_SECOND = 56;
 		
 		//주문양
 		public static int ORDER_TOTAL_AMOUNT = 500000;

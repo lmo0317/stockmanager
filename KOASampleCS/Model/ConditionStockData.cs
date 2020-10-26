@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace KOASampleCS
 {
-	class StockItemInfo
+	class ConditionStockData
 	{
 		public string code { get; set; }
 		public string name { get; set; }
